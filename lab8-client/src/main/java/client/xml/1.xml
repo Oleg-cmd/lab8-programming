@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<root>
+<Movie>
+    <id>7422018</id>
+    <name>naming</name>
+    <director>
+        <name>Hui</name>
+        <birthday>1983-11-11T00:00+03:00[Europe/Moscow]</birthday>
+        <height>23.0</height>
+        <eyeColor>BLUE</eyeColor>
+        <location>
+            <name>strange</name>
+            <x>4.54</x>
+            <y>9.32</y>
+        </location>
+    </director>
+    <creationDate>2023-02-20T17:59:57.098822+03:00[Europe/Moscow]</creationDate>
+    <mpaaRating>R</mpaaRating>
+    <coordinates>
+        <x>2.34</x>
+        <y>4.23</y>
+    </coordinates>
+    <oscarsCount>3</oscarsCount>
+    <goldenPalmCount>4</goldenPalmCount>
+    <tagline>here we go again</tagline>
+</Movie>
+</root>

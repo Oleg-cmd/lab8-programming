@@ -1,0 +1,7 @@
+2023-05-30 11:54:29,562 WARN h.FindFiles [main] Could not find history
+2023-05-30 11:54:29,565 ERROR h.MainHelper [main] Wrong data
+2023-05-30 11:55:33,167 WARN h.FindFiles [main] Could not find history
+2023-05-30 11:55:33,167 ERROR h.MainHelper [main] Wrong data
+2023-05-30 11:55:56,357 WARN d.DatabaseConnection [main] Unable to connect to database: Connection to localhost:5439 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2023-05-30 11:56:57,047 WARN m.LoginHandler [pool-3-thread-1] Failed to close client channel: Broken pipe
+2023-05-30 11:56:57,050 WARN r.HandleClientInput [pool-4-thread-1] Client channel is closed

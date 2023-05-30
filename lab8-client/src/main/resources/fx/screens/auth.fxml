@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600" prefWidth="400" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ClientConnectionGUI">
+   <children>
+      <VBox alignment="CENTER" layoutX="-6.0" layoutY="-2.0" prefHeight="752.0" prefWidth="763.0" style="-fx-background-color: rgb(0,0,0);">
+         <children>
+            <ImageView fitHeight="482.0" fitWidth="441.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/images/profile.jpg" />
+               </image>
+            </ImageView>
+            <Label />
+            <Label text="Welcome To Application" textFill="#e1e1e1" />
+            <Label prefHeight="20.0" prefWidth="206.0" text="Do u want to register or login?" textFill="#e1e1e1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <VBox alignment="CENTER" prefHeight="167.0" prefWidth="763.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="168.0" prefWidth="763.0">
+                     <children>
+                        <Button fx:id="reg" mnemonicParsing="false" prefHeight="18.0" prefWidth="73.0" style="-fx-translate-x: -50; -fx-border-radius: 8px; -fx-cursor: pointer; -fx-border-width: 1px; -fx-border-color: #222; -fx-background-radius: 8px; -fx-background-insets: 1; -fx-min-width: 75px; -fx-background-color: #13315C;" text="register" textFill="#fcfcfc" />
+                        <Button fx:id="log" mnemonicParsing="false" style="-fx-translate-x: 50; -fx-border-radius: 8px; -fx-cursor: pointer; -fx-border-width: 1px; -fx-border-color: #222; -fx-background-radius: 8px; -fx-background-insets: 1; -fx-min-width: 75px; -fx-background-color: #13315C;" text="login" textFill="WHITE" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children></VBox>
+   </children>
+</AnchorPane>

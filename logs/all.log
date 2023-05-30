@@ -1,0 +1,29 @@
+2023-05-30 11:54:29,562 WARN h.FindFiles [main] Could not find history
+2023-05-30 11:54:29,565 ERROR h.MainHelper [main] Wrong data
+2023-05-30 11:55:33,167 WARN h.FindFiles [main] Could not find history
+2023-05-30 11:55:33,167 ERROR h.MainHelper [main] Wrong data
+2023-05-30 11:55:37,669 INFO h.CreateNew [main] Files created successfully.
+2023-05-30 11:55:56,283 INFO h.MainHelper [main] Collection loaded from database successfuly
+2023-05-30 11:55:56,357 WARN d.DatabaseConnection [main] Unable to connect to database: Connection to localhost:5439 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2023-05-30 11:55:56,357 INFO m.ServerConnection [main] starting of start
+2023-05-30 11:55:56,364 INFO m.ServerConnection [main] Server started on port 11223
+2023-05-30 11:55:57,111 INFO m.ServerConnection [Thread-0] Client connected: /127.0.0.1:57184
+2023-05-30 11:55:57,111 INFO m.ServerConnection [Thread-0] Count of connected clients:  1
+2023-05-30 11:55:57,112 INFO d.ClientSession [Thread-0] new Client session was created
+2023-05-30 11:55:57,115 INFO m.LoginHandler [pool-3-thread-1] LogOrReq sending
+2023-05-30 11:55:57,116 INFO r.SendCommandList [pool-3-thread-1] End of sendString
+2023-05-30 11:55:57,117 INFO r.SendCommandList [pool-3-thread-1] End of sendString
+2023-05-30 11:56:57,045 INFO r.ReadFromClient [Thread-0] Starting readFromClient
+2023-05-30 11:56:57,045 INFO r.ReadFromClient [pool-3-thread-1] Client disconnect
+2023-05-30 11:56:57,046 INFO r.SendCommandList [pool-3-thread-1] End of sendString
+2023-05-30 11:56:57,046 INFO r.ReadFromClient [Thread-0] Client disconnected
+2023-05-30 11:56:57,046 INFO r.SendCommandList [pool-3-thread-1] End of sendString
+2023-05-30 11:56:57,046 INFO r.SendCommandList [pool-3-thread-1] End of sendString
+2023-05-30 11:56:57,047 WARN m.LoginHandler [pool-3-thread-1] Failed to close client channel: Broken pipe
+2023-05-30 11:56:57,050 WARN r.HandleClientInput [pool-4-thread-1] Client channel is closed
+2023-05-30 11:56:58,003 INFO m.ServerConnection [Thread-0] Client connected: /127.0.0.1:57191
+2023-05-30 11:56:58,003 INFO m.ServerConnection [Thread-0] Count of connected clients:  2
+2023-05-30 11:56:58,003 INFO d.ClientSession [Thread-0] new Client session was created
+2023-05-30 11:56:58,005 INFO m.LoginHandler [pool-5-thread-1] LogOrReq sending
+2023-05-30 11:56:58,006 INFO r.SendCommandList [pool-5-thread-1] End of sendString
+2023-05-30 11:56:58,006 INFO r.SendCommandList [pool-5-thread-1] End of sendString

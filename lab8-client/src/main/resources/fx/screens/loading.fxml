@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="750" prefWidth="750" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ClientConnectionGUI">
+    <children>
+        <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(0,0,0);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <ProgressIndicator />
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="160.0" text="Connecting to server..." textFill="WHITE" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

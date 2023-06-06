@@ -1,13 +1,13 @@
 package db;
 
 import model.Coordinates;
+import model.Location;
 import model.Movie;
 import model.MpaaRating;
 import model.Person;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -25,7 +25,6 @@ public class DatabaseManager {
 
     private static final Logger logger = LogManager.getLogger(DatabaseManager.class);
 
-
     public static int getUserId(String login, String password) {
         try (Connection connection = getConnection()) {
             assert connection != null;
@@ -39,14 +38,14 @@ public class DatabaseManager {
                 result = statement.executeQuery();
                 if (result.next()) {
                     String hashedPassword = result.getString("password");
-//                    logger.info(password + " " + hashedPassword);
+                    // logger.info(password + " " + hashedPassword);
                     if (verifyPassword(password, hashedPassword)) {
                         return id;
-                    }else{
+                    } else {
                         logger.warn("non-correct pass");
                     }
                 }
-            }else {
+            } else {
                 logger.warn("non-correct log");
             }
             return -1; // or throw an exception if the user is not found
@@ -55,6 +54,7 @@ public class DatabaseManager {
             return -1;
         }
     }
+
     public static String registerUser(String login, String password) throws SQLException {
         try (Connection connection = getConnection()) {
             assert connection != null;
@@ -63,8 +63,9 @@ public class DatabaseManager {
                 s = "such user already exist";
                 logger.info(s);
                 return s;
-            }else{
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO users (login, password) VALUES (?, ?)");
+            } else {
+                PreparedStatement statement = connection
+                        .prepareStatement("INSERT INTO users (login, password) VALUES (?, ?)");
                 statement.setString(1, login);
                 statement.setString(2, hashPassword(password));
                 statement.executeUpdate();
@@ -97,12 +98,6 @@ public class DatabaseManager {
             return false;
         }
     }
-
-
-
-
-
-
 
     private static Connection getConnection() throws SQLException {
         try {
@@ -139,12 +134,13 @@ public class DatabaseManager {
             PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM movies WHERE user_id = ?");
             deleteStatement.setInt(1, userId);
             deleteStatement.executeUpdate();
-            PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO movies (name, coordinate_x, coordinate_y, creation_date, oscars_count, golden_palm_count, tagline, mpaa_rating, director_name, director_birthday, director_height, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement insertStatement = connection.prepareStatement(
+                    "INSERT INTO movies (name, coordinate_x, coordinate_y, creation_date, oscars_count, golden_palm_count, tagline, mpaa_rating, director_name, director_birthday, director_height, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             for (Movie movie : movies) {
                 insertStatement.setString(1, movie.getName());
                 insertStatement.setDouble(2, movie.getCoordinates().getX());
                 insertStatement.setFloat(3, movie.getCoordinates().getY());
-                insertStatement.setDate(4,Date.valueOf(movie.getCreationDate().toLocalDate()));
+                insertStatement.setDate(4, Date.valueOf(movie.getCreationDate().toLocalDate()));
                 insertStatement.setInt(5, movie.getOscarsCount());
                 insertStatement.setInt(6, movie.getGoldenPalmCount());
                 insertStatement.setString(7, movie.getTagline());
@@ -171,7 +167,8 @@ public class DatabaseManager {
                 String name = result.getString("name");
                 float coordinateX = result.getFloat("coordinate_x");
                 float coordinateY = result.getFloat("coordinate_y");
-                ZonedDateTime creationDate = result.getDate("creation_date").toLocalDate().atStartOfDay(ZoneId.systemDefault());
+                ZonedDateTime creationDate = result.getDate("creation_date").toLocalDate()
+                        .atStartOfDay(ZoneId.systemDefault());
                 Integer oscarsCount = result.getInt("oscars_count");
                 Integer goldenPalmCount = result.getInt("golden_palm_count");
                 String tagline = result.getString("tagline");
@@ -180,9 +177,12 @@ public class DatabaseManager {
                 LocalDate directorBirthday = result.getDate("director_birthday").toLocalDate();
                 double directorHeight = result.getDouble("director_height");
                 Person director = new Person();
+                Location location = new Location();
+                location.setLocation(coordinateX, coordinateY, directorName);
                 director.setName(directorName);
                 director.setBirthday(directorBirthday.atStartOfDay(ZoneId.systemDefault()));
                 director.setHeight(directorHeight);
+                director.setLocation(location);
                 Movie movie = new Movie();
                 movie.setId(id);
                 movie.setName(name);
@@ -204,9 +204,4 @@ public class DatabaseManager {
         return movies;
     }
 
-
-
-
-
 }
-

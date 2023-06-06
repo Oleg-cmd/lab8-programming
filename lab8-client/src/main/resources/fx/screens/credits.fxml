@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ClientConnectionGUI">
+   <children>
+      <VBox alignment="CENTER" layoutX="-6.0" layoutY="-2.0" prefHeight="1007.0" prefWidth="1026.0" style="-fx-background-color: rgb(0,0,0);">
+         <children>
+            <ImageView fitHeight="482.0" fitWidth="441.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/images/profile.jpg" />
+               </image>
+            </ImageView>
+            <Label />
+            <Label text="Welcome To Application" textFill="#e1e1e1" />
+            <Label prefHeight="20.0" prefWidth="206.0" text="Enter your login and password" textFill="#e1e1e1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <VBox alignment="CENTER" prefHeight="167.0" prefWidth="517.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="86.0" prefWidth="546.0">
+                     <children>
+                        <TextField fx:id="logField" promptText="Login" style="-fx-translate-x: -25; -fx-max-width: 175;" />
+                        <PasswordField fx:id="passField" promptText="Password" style="-fx-translate-x: 25; -fx-max-width: 175;" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="73.0" prefWidth="763.0">
+               <children>
+                  <Button fx:id="enter" mnemonicParsing="false" prefHeight="26.0" prefWidth="75.0" style="-fx-border-radius: 8px; -fx-cursor: pointer; -fx-border-width: 1px; -fx-border-color: #222; -fx-background-radius: 8px; -fx-background-insets: 1; -fx-min-width: 75px; -fx-background-color: #13315C; -fx-translate-y: -20;" text="enter" textFill="#ebebeb" />
+                  <HBox fx:id="creditsBox" alignment="CENTER" maxWidth="204.0" prefHeight="45.0" prefWidth="200.0" style="-fx-max-width: 200px;" />
+               </children>
+            </VBox>
+         </children></VBox>
+   </children>
+</AnchorPane>

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import helpers.CommandObject;
+
 public class CommandHandler {
     private static String commandList;
 
@@ -13,12 +15,12 @@ public class CommandHandler {
 
     public static CommandObject handleCommand(String command) throws IOException {
         // Split the command into its components
-        // System.out.println(command);
+        System.out.println(command);
         String[] parts = command.trim().split("\\s+");
         // System.out.println(Arrays.toString(parts));
         // Check if the command is valid and has the correct syntax
         if (parts.length == 0 || parts.length >= 5 || !isValidCommand(parts[0])) {
-            System.out.println("Invalid command syntax");
+            System.out.println("Invalid command syntax by parts");
             return null;
         }
         if (hasTokens(parts)) {
@@ -70,7 +72,6 @@ public class CommandHandler {
         if (commandList != null) {
             String[] list = commandList.trim().split(", ");
             for (String s : list) {
-                // System.out.println(s);
                 if (s.trim().equals(command)) {
                     return true;
                 }
@@ -80,8 +81,11 @@ public class CommandHandler {
                 System.out.println("Closing app...");
                 return true;
             }
+        } else {
+            System.out.println("CommandList is null");
         }
 
+        System.out.println("command is not valid at all");
         return false;
     }
 }

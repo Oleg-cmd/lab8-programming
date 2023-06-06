@@ -6,13 +6,14 @@
 /Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/gui/BtnEvents/AuthBtn.java
 /Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/helpers/SymbolicPrintStream.java
 /Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/modules/ClientConnection.java
+/Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/gui/BtnEvents/CreditsBtn.java
 /Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/model/Location.java
 /Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/Client.java
 /Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/model/Movie.java
 /Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/App.java
-/Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/gui/EventManager.java
 /Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/model/MpaaRating.java
 /Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/model/Person.java
 /Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/model/Coordinates.java
 /Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/helpers/CommandObject.java
 /Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/helpers/CommandHandler.java
+/Users/olevegic/home/dev/lab/lab8-client/src/main/java/client/modules/StringAnalyzer.java

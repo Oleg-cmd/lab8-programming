@@ -7,6 +7,11 @@ public class Coordinates {
     private Float x; // Поле не может быть null
     private Float y; // Поле не может быть null
 
+    public Coordinates(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
     /**
      * Returns the x coordinate of the point.
      * 

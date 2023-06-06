@@ -10,6 +10,14 @@ public class Person {
     private Color eyeColor; // Поле не может быть null
     private Location location; // Поле не может быть null
 
+    public Person(String name, java.time.ZonedDateTime birthday, double height, Color eyeColor, Location location) {
+        this.name = name;
+        this.birthday = birthday;
+        this.height = height;
+        this.eyeColor = eyeColor;
+        this.location = location;
+    }
+
     /**
      * Sets the name of the person.
      * 

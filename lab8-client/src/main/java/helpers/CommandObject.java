@@ -1,4 +1,4 @@
-package client.helpers;
+package helpers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 public class CommandObject implements Serializable {
+
     private final String commandName;
     private final String[] tokens;
     private String xmlData;

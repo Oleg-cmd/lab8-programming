@@ -1,4 +1,5 @@
 package request;
+
 import helpers.CommandObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,9 +23,9 @@ public class ReadFromClient {
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         int bytesRead = 0;
         try {
-            if(clientChannel != null){
+            if (clientChannel != null) {
                 bytesRead = clientChannel.read(buffer);
-            }else {
+            } else {
                 logger.warn("Client channel is null");
             }
         } catch (IOException e) {
@@ -37,7 +38,11 @@ public class ReadFromClient {
             return null;
         }
 
-        byte[] bytes = buffer.array();
+        buffer.flip(); // Переводим буфер в режим чтения
+
+        byte[] bytes = new byte[buffer.remaining()];
+        buffer.get(bytes); // Читаем данные из буфера в массив байтов
+
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
         ObjectInputStream ois = null;
         try {
@@ -79,10 +84,10 @@ public class ReadFromClient {
                 if (sb.indexOf("turn-off-the-lights") != -1) {
                     sb.delete(sb.length() - "turn-off-the-lights".length(), sb.length());
                     messageComplete = true;
-                }else if(sb.indexOf("request") != -1){
+                } else if (sb.indexOf("request") != -1) {
                     sb.delete(sb.length() - "request".length(), sb.length());
                     messageComplete = true;
-                }else if(sb.indexOf("repeat") != -1){
+                } else if (sb.indexOf("repeat") != -1) {
                     sb.delete(sb.length() - "repeat".length(), sb.length());
                     messageComplete = true;
                 }
@@ -94,10 +99,5 @@ public class ReadFromClient {
         }
         return sb.toString();
     }
-
-
-
-
-
 
 }

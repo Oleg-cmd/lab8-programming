@@ -1,6 +1,6 @@
 package client.gui.BtnEvents;
 
-import client.gui.EventManager;
+import client.modules.StringAnalyzer;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,6 +18,7 @@ public class AuthBtn {
             // Логика работы при нажатии кнопки "Register"
             System.out.println("Register button clicked");
             // Дополнительный код...
+            StringAnalyzer.setClientData("1");
         });
 
         // Получаем ссылку на кнопку из FXML
@@ -27,6 +28,7 @@ public class AuthBtn {
             // Логика работы при нажатии кнопки "Login"
             System.out.println("Login button clicked");
             // Дополнительный код...
+            StringAnalyzer.setClientData("2");
         });
 
         System.out.println("end binding...");

@@ -29,19 +29,21 @@ public class LoginHandler implements Runnable {
 
     @Override
     public void run() {
-        try{
+        try {
             String credits = LogOrReq(clientChannel, session);
-            if(credits != null){
+            if (credits != null) {
                 logger.info(credits);
-                if(isCorrectLogin(credits)){
+                if (isCorrectLogin(credits)) {
                     SendCommandList.sendString(clientChannel, "Auth completed! Sending to u command list!");
                     SendCommandList.sendCommandsList(clientChannel);
-                }else {
-                    SendCommandList.sendString(clientChannel, "Your credits are wrong! Server will disconnect u to prevent hack");
+                } else {
+                    SendCommandList.sendString(clientChannel,
+                            "Your credits are wrong! Server will disconnect u to prevent hack");
                     handleDisconnect(clientChannel, session);
                 }
-            }else {
-                SendCommandList.sendString(clientChannel, "Your credits are wrong! Server will disconnect u to prevent hack");
+            } else {
+                SendCommandList.sendString(clientChannel,
+                        "Your credits are wrong! Server will disconnect u to prevent hack");
                 handleDisconnect(clientChannel, session);
             }
 
@@ -52,11 +54,11 @@ public class LoginHandler implements Runnable {
 
     public boolean isCorrectLogin(String credits) {
         // Check if login and password are correct
-//        logger.info( "isCorrectLogin - " + credits);
+        // logger.info( "isCorrectLogin - " + credits);
         logger.info(session.handleRequest(credits));
-        if(session.isAuthorized()){
+        if (session.isAuthorized()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -68,33 +70,34 @@ public class LoginHandler implements Runnable {
         }
 
         logger.info("LogOrReq sending");
-        SendCommandList.sendString(clientChannel, "Welcome to application!\n" + "if u want to register - type 1\n if u want to login - type 2");
+        SendCommandList.sendString(clientChannel,
+                "Welcome to application!\n" + "if u want to register - type 1\n if u want to login - type 2");
         String logs = ReadFromClient.readStringFromClient(clientChannel);
-        if(logs != null){
+        if (logs != null) {
             logs = logs.trim();
 
             logger.info("LogOrReq get data: " + logs);
 
             if (!logs.equals("")) {
-                if (logs.equalsIgnoreCase("1")){
+                if (logs.equalsIgnoreCase("1")) {
                     return setCredits(clientChannel, session);
-                }else if(logs.equalsIgnoreCase("2")) {
+                } else if (logs.equalsIgnoreCase("2")) {
                     SendCommandList.sendInvite(clientChannel);
                     String credits = ReadFromClient.readStringFromClient(clientChannel).trim();
                     String[] tokens = credits.split(" ");
-                    if(tokens.length == 2){
-                        if(tokens[0] != null && tokens[1] != null){
+                    if (tokens.length == 2) {
+                        if (tokens[0] != null && tokens[1] != null) {
                             return credits;
                         }
-                    }else{
+                    } else {
                         SendCommandList.sendString(clientChannel, "Bad credits provided, Server will disconnect u");
-                        handleDisconnect(session.getClientChannel(), session);
+                        handleDisconnect(clientChannel, session);
                         return null;
                     }
-                }
-                else {
-                    SendCommandList.sendString(clientChannel, "Operation " + logs + " not found. Server will disconnect u");
-                    handleDisconnect(session.getClientChannel(), session);
+                } else {
+                    SendCommandList.sendString(clientChannel,
+                            "Operation " + logs + " not found. Server will disconnect u");
+                    handleDisconnect(clientChannel, session);
                     return null;
                 }
             }
@@ -102,8 +105,8 @@ public class LoginHandler implements Runnable {
         return null;
     }
 
-
-    public static String setCredits(SocketChannel clientChannel, ClientSession session) throws IOException, SQLException {
+    public static String setCredits(SocketChannel clientChannel, ClientSession session)
+            throws IOException, SQLException {
         if (!clientChannel.isOpen()) {
             handleDisconnect(clientChannel, session);
             return null;
@@ -115,21 +118,22 @@ public class LoginHandler implements Runnable {
         if (userTokens != null && userTokens.length >= 1) {
             String userLogin = userTokens[0].trim();
             String userPassword = userTokens[1].trim();
-            if(!userLogin.equals("") && !userPassword.equals("")){
+            if (!userLogin.equals("") && !userPassword.equals("")) {
 
                 String result = DatabaseManager.registerUser(userLogin, userPassword);
                 logger.info(result);
-                if(!result.equals("result")){
+                if (!result.equals("result")) {
                     return userLogin + " " + userPassword;
-                }else {
+                } else {
                     logger.info("Failed while hashing password");
                     SendCommandList.sendString(clientChannel, "Server get error while hashing ur password");
                     handleDisconnect(session.getClientChannel(), session);
                     return null;
                 }
 
-            }else {
-                SendCommandList.sendString(clientChannel, "Your values cannot be empty! Server will disconnect u to prevent hack");
+            } else {
+                SendCommandList.sendString(clientChannel,
+                        "Your values cannot be empty! Server will disconnect u to prevent hack");
                 handleDisconnect(session.getClientChannel(), session);
                 return null;
             }
@@ -137,22 +141,20 @@ public class LoginHandler implements Runnable {
         return null;
     }
 
-
-
-    public static void handleDisconnect(SocketChannel clientChannel, ClientSession session){
+    public static void handleDisconnect(SocketChannel clientChannel, ClientSession session) {
         try {
             if (clientChannel.isOpen()) {
                 SendCommandList.sendString(clientChannel, "Server is disconnectiong u...");
                 session.getExecutor().shutdownNow();
                 logger.info("Client disconnected: " + clientChannel.getRemoteAddress());
-//                clientChannel.close();
+                // clientChannel.close();
             }
         } catch (IOException e) {
             logger.warn("Failed to close client channel: " + e.getMessage());
         } finally {
-            try{
+            try {
                 session.close();
-            }catch (IOException e){
+            } catch (IOException e) {
                 logger.warn(e);
             }
 

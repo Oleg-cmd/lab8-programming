@@ -2,6 +2,8 @@ package client.helpers;
 
 import java.io.IOException;
 
+import helpers.CommandObject;
+
 public class InputHandler {
 
     public static CommandObject createCommandObject(String commandName, String[] tokens, String XML) {

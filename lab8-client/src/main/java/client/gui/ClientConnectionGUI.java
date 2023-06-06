@@ -1,26 +1,33 @@
 package client.gui;
 
 import client.gui.BtnEvents.AuthBtn;
+import client.gui.BtnEvents.CreditsBtn;
+import client.gui.BtnEvents.Setup;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import client.modules.ClientLogic;
+import client.modules.HandleUserInput;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class ClientConnectionGUI extends Application {
     private static Stage mainStage; // Статическая переменная для хранения ссылки на Stage
     private static Thread clientThread; // Хранение ссылки на поток ClientLogic
-
-    // Создаем экземпляр EventManager
-    public static EventManager eventManager = new EventManager();
+    private static TextArea logTextArea;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -41,10 +48,14 @@ public class ClientConnectionGUI extends Application {
 
         primaryStage.setOnCloseRequest(e -> {
             // Остановка потока ClientLogic при закрытии приложения
-            clientThread.interrupt();
-            Platform.exit();
-            System.exit(0);
+            CloseUp();
         });
+    }
+
+    public static void CloseUp() {
+        clientThread.interrupt();
+        Platform.exit();
+        System.exit(0);
     }
 
     public static void showLoadingWindow() {
@@ -70,23 +81,87 @@ public class ClientConnectionGUI extends Application {
             System.out.println("showAuthWindow() called");
             if (mainStage != null) {
                 try {
-                    System.out.println("creating...");
                     FXMLLoader loader = new FXMLLoader();
                     URL xmlUrl = ClientConnectionGUI.class.getResource("/fx/screens/auth.fxml");
                     loader.setLocation(xmlUrl);
-                    System.out.println("creating...");
                     Parent rootLayout = loader.load();
                     Scene scene = new Scene(rootLayout);
-                    System.out.println("creating...");
                     mainStage.setScene(scene);
                     mainStage.show();
-                    System.out.println("creating...");
                     // Создаем экземпляр ButtonEventManager и передаем ему eventManager
                     AuthBtn authBtn = new AuthBtn();
-                    System.out.println("created authbtn");
                     // Вызываем метод bindEvents() для привязки ивентов к кнопкам
                     authBtn.bindEvents(scene);
-                    System.out.println("binded");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("mainStage is null");
+            }
+        });
+
+    }
+
+    public static void showCredits() {
+        Platform.runLater(() -> {
+            System.out.println("showCredits() called");
+            if (mainStage != null) {
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    URL xmlUrl = ClientConnectionGUI.class.getResource("/fx/screens/credits.fxml");
+                    loader.setLocation(xmlUrl);
+                    Parent rootLayout = loader.load();
+                    Scene scene = new Scene(rootLayout);
+                    mainStage.setScene(scene);
+                    mainStage.show();
+                    CreditsBtn creditsBtn = new CreditsBtn();
+                    creditsBtn.bindEvents(scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("mainStage is null");
+            }
+        });
+
+    }
+
+    public static void show404() {
+        Platform.runLater(() -> {
+            System.out.println("showCredits() called");
+            if (mainStage != null) {
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    URL xmlUrl = ClientConnectionGUI.class.getResource("/fx/screens/404.fxml");
+                    loader.setLocation(xmlUrl);
+                    Parent rootLayout = loader.load();
+                    Scene scene = new Scene(rootLayout);
+                    mainStage.setScene(scene);
+                    mainStage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("mainStage is null");
+            }
+        });
+
+    }
+
+    public static void showMainScreen() {
+        Platform.runLater(() -> {
+            System.out.println("showMainScreen() called");
+            if (mainStage != null) {
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    URL xmlUrl = ClientConnectionGUI.class.getResource("/fx/screens/main.fxml");
+                    loader.setLocation(xmlUrl);
+                    Parent rootLayout = loader.load();
+                    Scene scene = new Scene(rootLayout);
+                    scene = Setup.setup(scene);
+                    mainStage.setScene(scene);
+                    mainStage.show();
 
                 } catch (IOException e) {
                     e.printStackTrace();

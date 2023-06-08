@@ -2,13 +2,17 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="1000.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ClientConnectionGUI">
+<AnchorPane prefHeight="1000.0" prefWidth="1000.0" style="-fx-background-color: #151515;" stylesheets="@../../assets/styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ClientConnectionGUI">
    <children>
       <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="895.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -19,49 +23,140 @@
       <Button fx:id="init" layoutX="475.0" layoutY="62.0" mnemonicParsing="false" style="-fx-min-width: 160px; -fx-background-color: #512DA8; -fx-text-fill: #fff;" text="Initialization commands" />
       <Button fx:id="mod" layoutX="274.0" layoutY="62.0" mnemonicParsing="false" style="-fx-min-width: 160px; -fx-background-color: #512DA8; -fx-text-fill: #fff;" text="Modification commands" />
       <Button fx:id="gen" layoutX="71.0" layoutY="61.0" mnemonicParsing="false" style="-fx-min-width: 160px; -fx-background-color: #512DA8; -fx-text-fill: #fff;" text="General commands" />
-      <VBox fx:id="genX" alignment="CENTER_LEFT" layoutX="71.0" layoutY="87.0" prefHeight="215.0" prefWidth="159.0" style="-fx-border-radius: 10px; -fx-background-color: #fff; -fx-padding: 1 1 1 1;" visible="false">
+      <VBox fx:id="genX" alignment="CENTER_LEFT" layoutX="71.0" layoutY="87.0" prefHeight="215.0" prefWidth="159.0" style="-fx-border-radius: 10px; -fx-background-color: #989BBE; -fx-padding: 1 1 1 1;">
          <children>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Help" />
+            <Button fx:id="help" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Help" />
             <HBox prefHeight="15.0" prefWidth="162.0" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Info" />
+            <Button fx:id="info" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Info" />
             <HBox prefHeight="15.0" prefWidth="162.0" />
-            <Button fx:id="show" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Show" />
+            <Button fx:id="show" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Show" />
             <HBox prefHeight="16.0" prefWidth="162.0" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="History" />
+            <Button fx:id="history" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="History" />
             <HBox prefHeight="16.0" prefWidth="162.0" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Quit" />
+            <Button fx:id="quit" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Quit" />
          </children>
       </VBox>
-      <VBox fx:id="modX" alignment="CENTER_LEFT" layoutX="274.0" layoutY="89.0" prefHeight="212.0" prefWidth="159.0" style="-fx-border-radius: 10px; -fx-background-color: #fff; -fx-padding: 1 1 1 1;" visible="false">
+      <VBox fx:id="modX" alignment="CENTER_LEFT" layoutX="274.0" layoutY="89.0" prefHeight="212.0" prefWidth="159.0" style="-fx-border-radius: 10px; -fx-background-color: #989BBE; -fx-padding: 1 1 1 1;">
          <children>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Clear" />
+            <Button fx:id="clear" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Clear" />
             <HBox prefHeight="15.0" prefWidth="162.0" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Remove" />
+            <Button fx:id="remove" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Remove" />
             <HBox prefHeight="16.0" prefWidth="162.0" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Remove_Lower" />
+            <Button fx:id="remove_l" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Remove_Lower" />
             <HBox prefHeight="16.0" prefWidth="162.0" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Save" />
+            <Button fx:id="save" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Save" />
             <HBox prefHeight="16.0" prefWidth="162.0" />
-            <Button mnemonicParsing="false" prefHeight="18.0" prefWidth="157.0" text="Update" />
+            <Button fx:id="update" mnemonicParsing="false" prefHeight="18.0" prefWidth="157.0" styleClass="btn" text="Update" />
          </children>
       </VBox>
-      <VBox fx:id="initX" alignment="CENTER_LEFT" layoutX="475.0" layoutY="88.0" prefHeight="83.0" prefWidth="159.0" style="-fx-border-radius: 10px; -fx-background-color: #fff; -fx-padding: 1 1 1 1;" visible="false">
+      <VBox fx:id="initX" alignment="CENTER_LEFT" layoutX="475.0" layoutY="88.0" prefHeight="83.0" prefWidth="159.0" style="-fx-border-radius: 10px; -fx-background-color: #989BBE; -fx-padding: 1 1 1 1;">
          <children>
             <HBox prefHeight="17.0" prefWidth="157.0" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Add" />
+            <Button fx:id="add" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Add" />
             <HBox prefHeight="15.0" prefWidth="162.0" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Add_Max" />
+            <Button fx:id="add_max" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Add_Max" />
             <HBox prefHeight="16.0" prefWidth="162.0" />
             <HBox prefHeight="0.0" prefWidth="157.0" />
          </children>
       </VBox>
-      <VBox fx:id="otherX" alignment="CENTER_LEFT" layoutX="672.0" layoutY="87.0" prefHeight="86.0" prefWidth="159.0" style="-fx-border-radius: 10px; -fx-background-color: #fff; -fx-padding: 1 1 1 1;" visible="false">
+      <VBox fx:id="otherX" alignment="CENTER_LEFT" layoutX="672.0" layoutY="87.0" prefHeight="86.0" prefWidth="159.0" style="-fx-border-radius: 10px; -fx-background-color: #989BBE; -fx-padding: 1 1 1 1;">
          <children>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Clear History" />
+            <Button fx:id="clear_history" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Clear History" />
             <HBox prefHeight="15.0" prefWidth="162.0" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" text="Find by Name" />
+            <Button fx:id="find" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Find by Name" />
          </children>
       </VBox>
       <Label fx:id="username" layoutX="905.0" layoutY="99.0" text="User" textFill="WHITE" />
+      <ScrollPane fx:id="scrollpane" hbarPolicy="NEVER" hmax="0.0" layoutX="73.0" layoutY="506.0" pannable="true" prefHeight="437.0" prefWidth="763.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="503.0" prefWidth="761.0" stylesheets="@../../assets/styles/styles.css">
+               <children>
+                  <GridPane fx:id="grid" alignment="CENTER" gridLinesVisible="true" layoutX="23.0" layoutY="26.0" prefHeight="132.0" prefWidth="716.0" style="-fx-background-color: #989BBE; -fx-padding: 0 0 0 0;" vgap="15.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.20130920410156" minWidth="10.0" prefWidth="168.6745147705078" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.47647094726562" minWidth="10.0" prefWidth="162.8254852294922" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.47647094726562" minWidth="10.0" prefWidth="162.8254852294922" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.47647094726562" minWidth="10.0" prefWidth="162.8254852294922" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.47647094726562" minWidth="10.0" prefWidth="162.8254852294922" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="52.93971252441406" minHeight="0.0" prefHeight="45.063507080078125" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="52.436492919921875" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" styleClass="text" text="Label" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="150.0" styleClass="text" text="Label" GridPane.rowIndex="2" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="150.0" styleClass="text" text="Label" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <GridPane vgap="5.0" GridPane.rowIndex="1">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <GridPane hgap="10.0" prefHeight="16.0" prefWidth="142.0" GridPane.rowIndex="1">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                              </GridPane>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="150.0" styleClass="text" text="Label" />
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="153.0" styleClass="text" text="Label" GridPane.rowIndex="1" />
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="153.0" styleClass="text" text="Label" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                        <GridPane GridPane.columnIndex="1">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="Label" GridPane.columnIndex="1" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="Label" />
+                           </children>
+                        </GridPane>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="Label" GridPane.columnIndex="2" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="Label" GridPane.columnIndex="3" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="Label" GridPane.columnIndex="4" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="Label" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <VBox layoutX="475.0" layoutY="183.0" prefHeight="239.0" prefWidth="359.0" style="-fx-background-color: #989BBE;">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="19.0" prefWidth="359.0" style="-fx-background-color: #512DA8; -fx-text-fill: #fff; -fx-border-radius: 0px;" text="Control centre" />
+         </children>
+      </VBox>
+      <Button layoutX="407.0" layoutY="954.0" mnemonicParsing="false" style="-fx-background-color: #512DA8; -fx-text-fill: #fff;" text="visualization" />
+      <HBox layoutX="73.0" layoutY="454.0" prefHeight="52.0" prefWidth="763.0" style="-fx-background-color: #512DA8;" />
    </children>
 </AnchorPane>

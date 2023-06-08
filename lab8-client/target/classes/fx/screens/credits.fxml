@@ -29,10 +29,10 @@
             </Label>
             <VBox alignment="CENTER" prefHeight="167.0" prefWidth="517.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="86.0" prefWidth="546.0">
+                  <HBox alignment="CENTER" prefHeight="86.0" prefWidth="546.0" stylesheets="@../../assets/styles/styles.css">
                      <children>
-                        <TextField fx:id="logField" promptText="Login" style="-fx-translate-x: -25; -fx-max-width: 175;" />
-                        <PasswordField fx:id="passField" promptText="Password" style="-fx-translate-x: 25; -fx-max-width: 175;" />
+                        <TextField fx:id="logField" promptText="Login" style="-fx-translate-x: -25; -fx-max-width: 175; -fx-background-color: rgb(0,0,0); -fx-border-color: #fff;" styleClass="text" />
+                        <PasswordField fx:id="passField" promptText="Password" style="-fx-translate-x: 25; -fx-max-width: 175; -fx-background-color: rgb(0,0,0); -fx-border-color: #ffff;" styleClass="text" />
                      </children>
                   </HBox>
                </children>

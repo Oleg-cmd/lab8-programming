@@ -21,6 +21,12 @@ public class Location {
         this.y = y;
     }
 
+    public Location(double x, double y, String name) {
+        this.x = x;
+        this.y = y;
+        this.name = name;
+    }
+
     /**
      * Gets the x-coordinate of the location.
      * 

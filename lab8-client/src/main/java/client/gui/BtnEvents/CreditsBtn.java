@@ -10,11 +10,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 public class CreditsBtn {
-    public CreditsBtn() {
+    private static String username;
+    private static String password;
 
+    public CreditsBtn() {
+    }
+
+    public static String getUsername() {
+        return username.trim();
     }
 
     public void bindEvents(Scene scene) {
@@ -23,6 +28,7 @@ public class CreditsBtn {
         Button enterBtn = (Button) scene.lookup("#enter");
         TextField login = (TextField) scene.lookup("#logField");
         PasswordField pass = (PasswordField) scene.lookup("#passField");
+
         // Привязываем лямбда-выражение вместо анонимного класса
         enterBtn.setOnAction((ActionEvent event) -> {
             // Логика работы при нажатии кнопки "Register"
@@ -30,8 +36,11 @@ public class CreditsBtn {
 
             // Проверяем значения login и pass на null и пустую строку
             if (login != null && !login.getText().isEmpty() && pass != null && !pass.getText().isEmpty()) {
-                System.out.println(login.getText().trim() + " " + pass.getText().trim());
-                StringAnalyzer.setClientData(login.getText().trim() + " " + pass.getText().trim());
+
+                username = login.getText();
+                password = pass.getText();
+
+                StringAnalyzer.setClientData(username.trim() + " " + password.trim());
             } else {
                 // Значения login или pass равны null или пустой строке
                 // Добавляем текстовое поле с надписью "fields can't be null" под кнопкой

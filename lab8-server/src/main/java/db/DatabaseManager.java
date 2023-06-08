@@ -1,5 +1,6 @@
 package db;
 
+import model.Color;
 import model.Coordinates;
 import model.Location;
 import model.Movie;
@@ -50,7 +51,7 @@ public class DatabaseManager {
             }
             return -1; // or throw an exception if the user is not found
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(e);
             return -1;
         }
     }
@@ -135,7 +136,7 @@ public class DatabaseManager {
             deleteStatement.setInt(1, userId);
             deleteStatement.executeUpdate();
             PreparedStatement insertStatement = connection.prepareStatement(
-                    "INSERT INTO movies (name, coordinate_x, coordinate_y, creation_date, oscars_count, golden_palm_count, tagline, mpaa_rating, director_name, director_birthday, director_height, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO movies (name, coordinate_x, coordinate_y, creation_date, oscars_count, golden_palm_count, tagline, mpaa_rating, director_name, director_birthday, director_height, user_id, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             for (Movie movie : movies) {
                 insertStatement.setString(1, movie.getName());
                 insertStatement.setDouble(2, movie.getCoordinates().getX());
@@ -149,6 +150,7 @@ public class DatabaseManager {
                 insertStatement.setDate(10, Date.valueOf(movie.getDirector().getBirthday().toLocalDate()));
                 insertStatement.setDouble(11, movie.getDirector().getHeight());
                 insertStatement.setInt(12, userId);
+                insertStatement.setString(13, movie.getDirector().getEyeColor().toString());
                 insertStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -176,6 +178,7 @@ public class DatabaseManager {
                 String directorName = result.getString("director_name");
                 LocalDate directorBirthday = result.getDate("director_birthday").toLocalDate();
                 double directorHeight = result.getDouble("director_height");
+                Color color = Color.valueOf(result.getString("color"));
                 Person director = new Person();
                 Location location = new Location();
                 location.setLocation(coordinateX, coordinateY, directorName);
@@ -183,6 +186,7 @@ public class DatabaseManager {
                 director.setBirthday(directorBirthday.atStartOfDay(ZoneId.systemDefault()));
                 director.setHeight(directorHeight);
                 director.setLocation(location);
+                director.setEyeColor(color);
                 Movie movie = new Movie();
                 movie.setId(id);
                 movie.setName(name);

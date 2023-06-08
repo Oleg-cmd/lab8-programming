@@ -1,0 +1,8 @@
+.text{
+    -fx-text-fill: #fff;
+}
+
+.btn{
+    -fx-background-color:#151515;
+    -fx-text-fill: #fff;
+}

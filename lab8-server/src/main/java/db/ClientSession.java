@@ -14,18 +14,14 @@ import java.util.concurrent.Executors;
 
 public class ClientSession implements Runnable {
 
-
     private static final int NUM_THREADS = Runtime.getRuntime().availableProcessors();
 
     private boolean authorized;
     private int userId; // новое поле для хранения идентификатора пользователя
 
-
     private final SocketChannel clientChannel;
     private ExecutorService executor;
     private String username;
-
-
 
     private static final Logger logger = LogManager.getLogger(ClientSession.class);
 
@@ -36,20 +32,18 @@ public class ClientSession implements Runnable {
         logger.info("new Client session was created");
     }
 
-
-
     @Override
     public void run() {
     }
 
-    public ExecutorService getExecutor(){
+    public ExecutorService getExecutor() {
         return executor;
     }
 
     public String handleRequest(String request) {
         String[] tokens = request.split(" ");
 
-        if(tokens != null && tokens.length > 1){
+        if (tokens != null && tokens.length > 1) {
 
             String login = tokens[0].trim();
             String password = tokens[1].trim();
@@ -61,7 +55,7 @@ public class ClientSession implements Runnable {
                 setUserId(myId);
 
                 // init & load collection of movies
-//                System.out.println(getUserId());
+                // System.out.println(getUserId());
                 CollectionManager local = new CollectionManager();
                 UserCollectionManager.addCollection(myId, local);
                 dbHelperCommand.preLoad(loadObjects(), local);
@@ -69,17 +63,14 @@ public class ClientSession implements Runnable {
 
                 //
                 return "Auth complete";
-            }else {
+            } else {
                 return "Auth failed";
             }
-        }else{
+        } else {
             return "Bad tokens provided";
         }
 
-
     }
-
-
 
     public SocketChannel getClientChannel() {
         return clientChannel;
@@ -90,7 +81,6 @@ public class ClientSession implements Runnable {
         executor.shutdownNow();
         clientChannel.close();
     }
-
 
     public boolean isAuthorized() {
         return authorized;
@@ -108,14 +98,14 @@ public class ClientSession implements Runnable {
     public int getUserId() {
         return userId;
     }
-    public static void saveObjects(Collection<Movie> movies){
+
+    public static void saveObjects(Collection<Movie> movies) {
         DatabaseManager.saveMovies(movies, ServerConnection.getUserIdForSession(ServerConnection.clientChannel));
     }
 
-    public static Collection<Movie> loadObjects(){
+    public static Collection<Movie> loadObjects() {
         return DatabaseManager.loadMovies(ServerConnection.getUserIdForSession(ServerConnection.clientChannel));
     }
-
 
     // addictional func for any reasons
     public void reload() {

@@ -56,6 +56,19 @@ public class Movie {
      */
     private Person director;
 
+    public Movie(Integer id, String name, Coordinates coordinates, ZonedDateTime creationDate, Integer oscarsCount,
+            Integer goldenPalmCount, String tagline, MpaaRating mpaaRating, Person director) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
+        this.oscarsCount = oscarsCount;
+        this.goldenPalmCount = goldenPalmCount;
+        this.tagline = tagline;
+        this.mpaaRating = mpaaRating;
+        this.director = director;
+    }
+
     /**
      * Returns the id of the movie.
      *

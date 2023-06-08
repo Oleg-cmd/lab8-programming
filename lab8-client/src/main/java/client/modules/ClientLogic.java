@@ -1,5 +1,7 @@
 package client.modules;
 
+import client.gui.ClientConnectionGUI;
+
 public class ClientLogic implements Runnable {
     @Override
     public void run() {

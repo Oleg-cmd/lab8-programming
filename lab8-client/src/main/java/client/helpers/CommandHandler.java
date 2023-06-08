@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import client.gui.ClientConnectionGUI;
 import helpers.CommandObject;
 
 public class CommandHandler {
@@ -79,6 +80,8 @@ public class CommandHandler {
 
             if (command.trim().equals("quit")) {
                 System.out.println("Closing app...");
+                ClientConnectionGUI.CloseUp();
+                System.out.println("Application closed");
                 return true;
             }
         } else {

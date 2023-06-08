@@ -2,27 +2,18 @@ package client.gui;
 
 import client.gui.BtnEvents.AuthBtn;
 import client.gui.BtnEvents.CreditsBtn;
-import client.gui.BtnEvents.Setup;
+import client.gui.events.Setup;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import client.modules.ClientLogic;
-import client.modules.HandleUserInput;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class ClientConnectionGUI extends Application {
     private static Stage mainStage; // Статическая переменная для хранения ссылки на Stage
@@ -50,6 +41,7 @@ public class ClientConnectionGUI extends Application {
             // Остановка потока ClientLogic при закрытии приложения
             CloseUp();
         });
+
     }
 
     public static void CloseUp() {
@@ -142,6 +134,19 @@ public class ClientConnectionGUI extends Application {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            } else {
+                System.out.println("mainStage is null");
+            }
+        });
+
+    }
+
+    public static void updateSceneNow(Scene scene) {
+        Platform.runLater(() -> {
+            System.out.println("updateSceneNow() called");
+            if (mainStage != null) {
+                mainStage.setScene(scene);
+                mainStage.show();
             } else {
                 System.out.println("mainStage is null");
             }

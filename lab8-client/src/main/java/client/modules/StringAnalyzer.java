@@ -3,10 +3,16 @@ package client.modules;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import client.gui.ClientConnectionGUI;
+import client.gui.events.Setup;
+import client.helpers.MovieManager;
+import client.helpers.MovieParser;
+import client.model.Movie;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
@@ -35,6 +41,17 @@ public class StringAnalyzer {
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+            }
+        }
+
+        if (receivedData.contains("show-c")) {
+            String[] lines = receivedData.split("\n");
+            if (lines.length >= 2) {
+                String data = lines[1];
+                System.out.println("Parsing");
+                MovieManager.movies = MovieParser.parseMovies(data);
+                MovieManager.setupMovies(Setup.setupScene);
+                System.out.println(MovieManager.movies);
             }
         }
 

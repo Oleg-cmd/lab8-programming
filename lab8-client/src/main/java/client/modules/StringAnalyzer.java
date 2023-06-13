@@ -25,7 +25,10 @@ public class StringAnalyzer {
     }
 
     public static void checkString(String receivedData, SocketChannel socketChannel) {
+        boolean isStep = false;
+
         if (receivedData.contains("Welcome")) {
+            isStep = true;
             String clientData;
             try {
                 clientData = future.get();
@@ -44,7 +47,8 @@ public class StringAnalyzer {
             }
         }
 
-        if (receivedData.contains("show-c")) {
+        else if (receivedData.contains("show-c")) {
+            isStep = true;
             String[] lines = receivedData.split("\n");
             if (lines.length >= 2) {
                 String data = lines[1];
@@ -55,7 +59,8 @@ public class StringAnalyzer {
             }
         }
 
-        if (receivedData.contains("Your credits are wrong!") || receivedData.contains("Bad credits provided")) {
+        else if (receivedData.contains("Your credits are wrong!") || receivedData.contains("Bad credits provided")) {
+            isStep = true;
             Task<Void> task = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
@@ -77,7 +82,8 @@ public class StringAnalyzer {
             thread.start();
         }
 
-        if (receivedData.contains("Enter") || receivedData.contains("Please")) {
+        else if (receivedData.contains("Enter") || receivedData.contains("Please")) {
+            isStep = true;
             String clientData;
             try {
                 ClientConnectionGUI.showCredits();
@@ -97,13 +103,14 @@ public class StringAnalyzer {
             }
         }
 
-        if (receivedData.contains("Auth completed!")) {
+        else if (receivedData.contains("Auth completed!")) {
+            isStep = true;
             String clientData;
             ClientConnectionGUI.showMainScreen();
-
         }
 
-        if (receivedData.trim().startsWith("repeat")) {
+        else if (receivedData.trim().startsWith("repeat")) {
+            isStep = true;
             String clientData = "fff";
             clientData = clientData + "\nrepeat"; // adding special word for recognising special command
                                                   // on server
@@ -115,7 +122,8 @@ public class StringAnalyzer {
             }
         }
 
-        if (receivedData.trim().startsWith("turn-off-the-lights")) {
+        else if (receivedData.trim().startsWith("turn-off-the-lights")) {
+            isStep = true;
             // System.out.println("im here");
             StringBuilder input = new StringBuilder();
             for (int i = 0; i <= 10; i++) {
@@ -140,6 +148,12 @@ public class StringAnalyzer {
             }
         }
 
+        else {
+            if (!isStep) {
+                ClientConnectionGUI.updateTextArea(receivedData);
+            }
+
+        }
     }
 
     public static void SendStringNow(String userInput, SocketChannel socketChannel) throws IOException {

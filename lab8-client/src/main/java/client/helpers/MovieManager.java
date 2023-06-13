@@ -6,12 +6,15 @@ import java.util.List;
 import client.gui.ClientConnectionGUI;
 import client.model.Movie;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 public class MovieManager {
     public static List<Movie> movies = new ArrayList<>();
@@ -40,52 +43,77 @@ public class MovieManager {
             System.out.println("Starting of setuping movies");
             ScrollPane scrollPane = (ScrollPane) scene.lookup("#scrollpane");
             AnchorPane anchorPane = (AnchorPane) scrollPane.getContent();
+            VBox vBox = (VBox) anchorPane.lookup("#xvbox");
             GridPane original = (GridPane) anchorPane.lookup("#grid");
 
             if (original != null) {
-                original.setVisible(false);
-
+                original.setVisible(true);
+                System.out.println("Movies size is: " + movies.size());
+                Double sum = 20.0;
                 for (Movie movie : movies) {
                     System.out.println("Starting for movie: " + movie.getId());
                     GridPane copy = gridCopy(original);
+                    sum += 160.0;
 
-                    for (Node child : copy.getChildren()) {
-                        Integer columnIndex = GridPane.getColumnIndex(child);
-                        Integer rowIndex = GridPane.getRowIndex(child);
+                    // for (Node child : copy.getChildren()) {
+                    // Integer columnIndex = GridPane.getColumnIndex(child);
+                    // Integer rowIndex = GridPane.getRowIndex(child);
 
-                        columnIndex = (columnIndex == null) ? 0 : columnIndex;
-                        rowIndex = (rowIndex == null) ? 0 : rowIndex;
+                    // columnIndex = (columnIndex == null) ? 0 : columnIndex;
+                    // rowIndex = (rowIndex == null) ? 0 : rowIndex;
 
-                        if (columnIndex == 0 && rowIndex == 0 && child instanceof GridPane) {
-                            GridPane innerGridPane = (GridPane) child;
-                            for (Node innerChild : innerGridPane.getChildren()) {
-                                Integer innerRowIndex = GridPane.getRowIndex(innerChild);
-                                innerRowIndex = (innerRowIndex == null) ? 0 : innerRowIndex;
+                    // // if (columnIndex == 0 && rowIndex == 0 && child instanceof GridPane) {
+                    // // GridPane innerGridPane = (GridPane) child;
+                    // // for (Node innerChild : innerGridPane.getChildren()) {
+                    // // Integer innerRowIndex = GridPane.getRowIndex(innerChild);
+                    // // innerRowIndex = (innerRowIndex == null) ? 0 : innerRowIndex;
 
-                                if (innerChild instanceof Label) {
-                                    if (innerRowIndex == 0) {
-                                        ((Label) innerChild).setText(movie.getName());
-                                    }
-                                    if (innerRowIndex == 1) {
-                                        ((Label) innerChild).setText(movie.getTagline());
-                                    }
-                                    if (innerRowIndex == 2) {
-                                        ((Label) innerChild).setText(movie.getId().toString());
-                                    }
-                                }
-                            }
-                        }
+                    // // if (innerChild instanceof Label) {
+                    // // if (innerRowIndex == 0) {
+                    // // ((Label) innerChild).setText(movies.get(0).getName());
+                    // // }
+                    // // if (innerRowIndex == 1) {
+                    // // ((Label) innerChild).setText(movies.get(0).getTagline());
+                    // // }
+                    // // if (innerRowIndex == 2) {
+                    // // ((Label) innerChild).setText(movies.get(0).getId().toString());
+                    // // }
+                    // // }
+                    // // }
+                    // // }
 
-                        // 0 1
-                        // 0 2
-                        // ...
-                        // 1 ...
+                    // // 0 1
+                    // // 0 2
+                    // // ...
+                    // // 1 ...
 
-                    }
+                    // }
+
+                    VBox vboxCopy = new VBox(copy);
+
+                    vboxCopy.setStyle(vBox.getStyle());
+
+                    vboxCopy.setPrefHeight(vBox.getPrefHeight());
+                    vboxCopy.setPrefWidth(vBox.getPrefWidth());
+
+                    vboxCopy.setMaxHeight(vBox.getMaxHeight());
+                    vboxCopy.setMinHeight(vBox.getMinHeight());
+
+                    vboxCopy.setMaxWidth(vBox.getMaxWidth());
+                    vboxCopy.setMinWidth(vBox.getMinWidth());
+
+                    vboxCopy.setLayoutX(vBox.getLayoutX());
+                    vboxCopy.setLayoutY(vBox.getLayoutY());
+
+                    vboxCopy.setBorder(null);
+
                     System.out.println("Adding to scrollPane");
-                    anchorPane.getChildren().addAll(copy);
+                    VBox.setMargin(copy, new Insets(sum, 0, 0, 0));
+                    anchorPane.getChildren().add(vboxCopy);
                     System.out.println("Movie " + movie.getId() + " is done");
                 }
+
+                System.out.println(anchorPane.getChildren());
                 System.out.println("Returning scene after updating");
             } else {
                 System.out.println("GridPane is null, im sry");
@@ -96,14 +124,43 @@ public class MovieManager {
 
     public static GridPane gridCopy(GridPane original) {
         GridPane copy = new GridPane();
-        // Копирование свойств
         copyProperties(original, copy);
+        copySize(original, copy);
+        for (Node child : original.getChildren()) {
+            Integer rowIndex = GridPane.getRowIndex(child);
+            Integer colIndex = GridPane.getColumnIndex(child);
 
-        // Копирование дочерних элементов (Node)
-        copyChildren(original, copy);
+            // Если индексы не заданы, считаем их нулями
+            rowIndex = (rowIndex == null) ? 0 : rowIndex;
+            colIndex = (colIndex == null) ? 0 : colIndex;
 
-        yOffset += 10; // Увеличение смещения для следующей копии
+            if (child instanceof GridPane) {
+                GridPane childCopy = gridCopy((GridPane) child);
+                copySize(child, childCopy); // copy size
+                copy.add(childCopy, colIndex, rowIndex);
+            } else if (child instanceof Label) {
+                Label labelCopy = copyLabel((Label) child);
+                copy.add(labelCopy, colIndex, rowIndex);
+            } else {
+                // Если появятся другие типы узлов, сделайте для них копии.
+            }
+        }
+
         return copy;
+    }
+
+    private static void copySize(Node original, Node copy) {
+        if (original instanceof Region && copy instanceof Region) {
+            Region originalRegion = (Region) original;
+            Region copyRegion = (Region) copy;
+
+            copyRegion.setPrefWidth(originalRegion.getPrefWidth());
+            copyRegion.setPrefHeight(originalRegion.getPrefHeight());
+            copyRegion.setMinWidth(originalRegion.getMinWidth());
+            copyRegion.setMinHeight(originalRegion.getMinHeight());
+            copyRegion.setMaxWidth(originalRegion.getMaxWidth());
+            copyRegion.setMaxHeight(originalRegion.getMaxHeight());
+        }
     }
 
     private static void copyProperties(GridPane original, GridPane copy) {
@@ -114,44 +171,27 @@ public class MovieManager {
         copy.setPrefWidth(original.getPrefWidth());
         copy.setPrefHeight(original.getPrefHeight());
         copy.setLayoutX(original.getLayoutX());
-        copy.setLayoutY(original.getLayoutY() + yOffset);
-        copy.setId(null);
-        copy.setVisible(true);
-
-        // Копирование фона
+        copy.setLayoutY(original.getLayoutY());
+        copy.setId(original.getId());
         copy.setBackground(original.getBackground());
-
-        // Копирование видимости линий сетки
         copy.setGridLinesVisible(original.isGridLinesVisible());
 
-        // ... продолжайте копирование других свойств
-    }
+        copy.setBorder(original.getBorder());
 
-    private static void copyChildren(GridPane original, GridPane copy) {
-        List<Node> childrenCopy = new ArrayList<>();
-        for (Node child : original.getChildren()) {
-            Node childCopy;
-            if (child instanceof GridPane) {
-                childCopy = gridCopy((GridPane) child);
-            } else if (child instanceof Label) {
-                childCopy = copyLabel((Label) child);
-            } else {
-                childCopy = child;
-            }
-            childrenCopy.add(childCopy);
-        }
-        copy.getChildren().setAll(childrenCopy);
+        // и так далее...
     }
 
     private static Label copyLabel(Label original) {
         Label copy = new Label();
-        copy.setText(original.getText());
+        copySize(original, copy);
         copy.setFont(original.getFont());
         copy.setTextFill(original.getTextFill());
         copy.setStyle(original.getStyle());
         copy.setAlignment(original.getAlignment());
         copy.setGraphic(original.getGraphic());
-        // ... продолжайте копирование других свойств
+        copy.setBorder(original.getBorder());
+        copy.setText(original.getText()); // добавили копирование текста
+        // и так далее...
         return copy;
     }
 

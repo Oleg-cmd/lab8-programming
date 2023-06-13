@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import client.modules.ClientLogic;
+import client.modules.HandleUserInput;
 
 import java.io.IOException;
 import java.net.URL;
@@ -154,6 +155,22 @@ public class ClientConnectionGUI extends Application {
 
     }
 
+    public static void updateTextArea(String text) {
+        Platform.runLater(() -> {
+            System.out.println("updateTextArea() called");
+            if (mainStage != null) {
+                Scene scene = mainStage.getScene();
+                TextArea area = (TextArea) scene.lookup("#txtarea");
+                area.setText(text);
+                mainStage.setScene(scene);
+                mainStage.show();
+            } else {
+                System.out.println("mainStage is null");
+            }
+        });
+
+    }
+
     public static void showMainScreen() {
         Platform.runLater(() -> {
             System.out.println("showMainScreen() called");
@@ -167,7 +184,7 @@ public class ClientConnectionGUI extends Application {
                     scene = Setup.setup(scene);
                     mainStage.setScene(scene);
                     mainStage.show();
-
+                    HandleUserInput.SendCommand("show");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

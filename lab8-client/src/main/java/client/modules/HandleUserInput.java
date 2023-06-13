@@ -1,7 +1,9 @@
 package client.modules;
 
+import client.gui.ClientConnectionGUI;
 import client.helpers.CommandHandler;
 import helpers.CommandObject;
+import javafx.application.Platform;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +12,10 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -39,7 +45,17 @@ public class HandleUserInput {
                             return;
                         }
                         buffer.flip();
-                        String receivedData = new String(buffer.array(), buffer.position(), buffer.limit());
+
+                        Charset charset = StandardCharsets.UTF_8;
+                        CharsetDecoder decoder = charset.newDecoder();
+                        String receivedData;
+                        try {
+                            receivedData = decoder.decode(buffer).toString();
+                        } catch (CharacterCodingException e) {
+                            // Error decoding data
+                            System.out.println("Failed to decode received data: " + e.getMessage());
+                            return;
+                        }
 
                         System.out.println(receivedData);
 

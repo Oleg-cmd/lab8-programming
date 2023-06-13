@@ -33,7 +33,8 @@ public class ShowCommand implements Command {
     @Override
     public void execute(CommandOutput output) {
         HashSet<Movie> movies = collectionManager.getMovies();
-
+        StringBuilder sb = new StringBuilder();
+        ;
         if (movies.isEmpty()) {
             try {
                 writer.write("The collection is empty.");
@@ -43,12 +44,13 @@ public class ShowCommand implements Command {
                 System.out.println(e);
             }
 
+        } else {
+            sb.append("show-c\n");
+            for (Movie movie : movies) {
+                sb.append(movie.toString());
+            }
         }
-        StringBuilder sb = new StringBuilder();
-        sb.append("show-c\n");
-        for (Movie movie : movies) {
-            sb.append(movie.toString());
-        }
+
         System.out.println(sb);
         output.append(String.valueOf(sb));
     }

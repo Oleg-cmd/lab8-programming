@@ -1,8 +1,18 @@
 .text{
     -fx-text-fill: #fff;
+    -fx-font-size: 15px;
 }
 
 .btn{
     -fx-background-color:#151515;
     -fx-text-fill: #fff;
+}
+
+.grid-pane{
+    -fx-border-width: 0 1px 0 0; /* Толщина границы: верхняя, правая, нижняя, левая */
+    -fx-border-color: black; /* Цвет границы */
+}
+.b-b{
+    -fx-border-width: 1px 1px 1px 1px; /* Толщина границы: верхняя, правая, нижняя, левая */
+    -fx-border-color: black; /* Цвет границы */
 }

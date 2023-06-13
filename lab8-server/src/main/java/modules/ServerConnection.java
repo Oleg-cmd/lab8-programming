@@ -25,11 +25,14 @@ public class ServerConnection {
     private final int port;
     private static ServerSocketChannel serverChannel;
     public static SocketChannel clientChannel;
+
     public ServerConnection(int port) {
         this.port = port;
     }
+
     public static int connectedClients = 0;
-    public static ServerSocketChannel getServerChannel(){
+
+    public static ServerSocketChannel getServerChannel() {
         return serverChannel;
     }
 
@@ -39,6 +42,8 @@ public class ServerConnection {
 
     private static int MAX_THREADS = 128;
 
+    // ExecutorService executor = Executors.newCachedThreadPool();
+    public static ExecutorService readExecutor = Executors.newCachedThreadPool();
 
     public void start() throws IOException, InterruptedException, ClassNotFoundException {
         UserCollectionManager userCollectionManager = new UserCollectionManager();
@@ -56,10 +61,6 @@ public class ServerConnection {
 
         logger.info("Server started on port " + port);
 
-//        ExecutorService executor = Executors.newCachedThreadPool();
-        ExecutorService readExecutor = Executors.newCachedThreadPool();
-
-
         Thread server_connection = new Thread() {
             public void run() {
                 while (true) {
@@ -72,14 +73,14 @@ public class ServerConnection {
                         while (keyIterator.hasNext()) {
                             SelectionKey key = keyIterator.next();
                             keyIterator.remove();
-                                    // Handle the event for the key
-                                    if (key.isAcceptable()) {
-                                        handleConnection(key, selector, readExecutor);
-                                    } else if (key.isReadable()) {
-                                        handleRead(key, selector);
-                                    } else if (key.isWritable()) { // Client disconnected
-                                        handleDisconnect(clientChannel);
-                                    }
+                            // Handle the event for the key
+                            if (key.isAcceptable()) {
+                                handleConnection(key, selector, readExecutor);
+                            } else if (key.isReadable()) {
+                                handleRead(key, selector);
+                            } else if (key.isWritable()) { // Client disconnected
+                                handleDisconnect(clientChannel);
+                            }
                         }
                     } catch (IOException err) {
                         logger.warn("catch some er" + err);
@@ -88,29 +89,27 @@ public class ServerConnection {
             }
         };
 
-
-        Thread serverReading = new Thread(){
-          public void run(){
-              BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-              while (true){
-                  try {
-                      String serverInput = reader.readLine();
-                      if(serverInput != null){
-                          if(serverInput.equals("save")){
-                              UserInputHandler.toExecute("save");
-                          }
-                      }
-                  } catch (IOException e) {
-                      throw new RuntimeException(e);
-                  }
-              }
-          }
+        Thread serverReading = new Thread() {
+            public void run() {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                while (true) {
+                    try {
+                        String serverInput = reader.readLine();
+                        if (serverInput != null) {
+                            if (serverInput.equals("save")) {
+                                UserInputHandler.toExecute("save");
+                            }
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
         };
 
         server_connection.start();
         serverReading.start();
     }
-
 
     public static int getUserIdForSession(SocketChannel clientChannel) {
         for (ClientSession session : sessions) {
@@ -121,7 +120,7 @@ public class ServerConnection {
         return -1; // user not found
     }
 
-    private void handleConnection(SelectionKey key, Selector selector, ExecutorService readExecutor){
+    private void handleConnection(SelectionKey key, Selector selector, ExecutorService readExecutor) {
         try {
             SocketChannel clientChannel = serverChannel.accept();
             ServerConnection.clientChannel = clientChannel;
@@ -136,17 +135,17 @@ public class ServerConnection {
             // Pause for 1 second before sending the list of available commands
             Thread.sleep(1);
 
-
             // Create a new thread pool for this connection
             ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
             executor.execute(new LoginHandler(clientChannel, session, key));
             executor.shutdown();
-        }catch (IOException | InterruptedException e){
+        } catch (IOException | InterruptedException e) {
             logger.warn(e);
         }
 
     }
 
+    // Метод handleRead
     private void handleRead(SelectionKey key, Selector selector) {
         SocketChannel clientChannel = (SocketChannel) key.channel();
 
@@ -159,29 +158,22 @@ public class ServerConnection {
         ServerConnection.clientChannel = clientChannel;
         CommandObject data = ReadFromClient.readFromClient(clientChannel);
 
-        // Создаем новый пул потоков для каждого вызова handleRead()
-        ExecutorService readExecutor = Executors.newCachedThreadPool();
-
+        // Используем уже существующий пул потоков для обработки чтения
         readExecutor.submit(() -> {
             // Handle the client input
             try {
-                if (clientChannel != null) {
-                    HandleClientInput.handleClientInput(clientChannel, data, selector);
-                } else {
-                    logger.warn("Client channel is null");
-                }
+                HandleClientInput.handleClientInput(clientChannel, data, selector);
             } catch (IOException e) {
                 logger.warn(e);
             }
         });
     }
 
-
     public static void handleDisconnect(SocketChannel clientChannel) {
         try {
             logger.info("Client disconnected: " + clientChannel.getRemoteAddress());
             try {
-//                clientChannel.close();
+                // clientChannel.close();
                 logger.info("NON-closing client channel");
             } finally {
                 closeSession(clientChannel);
@@ -209,7 +201,6 @@ public class ServerConnection {
             }
         }
     }
-
 
     private static int getIndexByChannel(SocketChannel clientChannel) {
         for (int i = 0; i < sessions.size(); i++) {

@@ -22,14 +22,16 @@ public class Worker implements Command {
     public void setCollectionManager(CollectionManager collectionManager) {
         Worker.collectionManager = collectionManager;
     }
+
     /**
-     * Prompts the user to input information for a new movie, creates the movie, and adds it to the collection.
+     * Prompts the user to input information for a new movie, creates the movie, and
+     * adds it to the collection.
      *
      * @return
      * @throws IOException If an I/O error occurs.
      */
 
-    public static String inputText = "\n"+
+    public static String inputText = "\n" +
             "    directorBirthday: LocalDate (e.g. \"1990-05-01\")\n" +
             "    oscarsCount: Integer (e.g. \"5\")\n" +
             "    goldenPalmCount: Integer (e.g. \"3\")\n" +
@@ -39,7 +41,7 @@ public class Worker implements Command {
             "    coordinates: Float (e.g. \"45.123 67.890\")\n" +
             "    tagline: String (e.g. \"Fear can hold you prisoner. Hope can set you free.\")\n" +
             "    directorEyeColor: String (e.g. \"BLUE\")\n" +
-            "    location: Double, String (e.g. \"45.123 67.890 MyPLace\")\n"+
+            "    location: Double, String (e.g. \"45.123 67.890 MyPLace\")\n" +
             "    mpaaRating: String (e.g. \"PG_13\")\n";
 
     public static MethodReturn Code(Movie currentMovie, CommandOutput output) {
@@ -58,7 +60,7 @@ public class Worker implements Command {
         System.out.println("Woker - Code - 3");
 
         setters.put("coordinates", s -> {
-            while (true){
+            while (true) {
                 String[] coordinates = s.split(" ");
                 if (coordinates.length != 2) {
                     String err = "repeat \n" +
@@ -67,7 +69,8 @@ public class Worker implements Command {
                     output.append(err);
                     output.sendOutput(ServerConnection.clientChannel);
                     try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel)).trim();
+                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
+                                .trim();
                     } catch (IOException ex) {
                         System.out.println("IOException in WORKER : coordinates :" + ex);
                     }
@@ -87,7 +90,9 @@ public class Worker implements Command {
                         output.append(err);
                         output.sendOutput(ServerConnection.clientChannel);
                         try {
-                            s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel)).trim();
+                            s = Objects
+                                    .requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
+                                    .trim();
                         } catch (IOException ex) {
                             System.out.println("IOException in WORKER : coordinates :" + ex);
                         }
@@ -102,18 +107,19 @@ public class Worker implements Command {
         System.out.println("Woker - Code - 5");
 
         setters.put("oscarsCount", s -> {
-            while (true){
+            while (true) {
                 try {
                     movie.setOscarsCount(Integer.parseInt(s));
                     break;
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     String err = "repeat \n" +
                             "Invalid oscarsCount format\n" +
                             "write data again: \n";
                     output.append(err);
                     output.sendOutput(ServerConnection.clientChannel);
                     try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel)).trim();
+                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
+                                .trim();
                     } catch (IOException ex) {
                         System.out.println("IOException in WORKER : oscarsCount :" + ex);
                     }
@@ -124,18 +130,19 @@ public class Worker implements Command {
         System.out.println("Woker - Code - 6");
 
         setters.put("goldenPalmCount", s -> {
-            while (true){
+            while (true) {
                 try {
                     movie.setGoldenPalmCount(Integer.parseInt(s));
                     break;
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     String err = "repeat \n" +
                             "Invalid goldenPalmCount format\n" +
                             "write data again: \n";
                     output.append(err);
                     output.sendOutput(ServerConnection.clientChannel);
                     try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel)).trim();
+                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
+                                .trim();
                     } catch (IOException ex) {
                         System.out.println("IOException in WORKER : goldenPalmCount :" + ex);
                     }
@@ -147,18 +154,19 @@ public class Worker implements Command {
         setters.put("tagline", movie::setTagline);
 
         setters.put("mpaaRating", s -> {
-            while (true){
+            while (true) {
                 try {
                     movie.setMpaaRating(MpaaRating.valueOf(s));
                     break;
-                }catch (IllegalArgumentException e){
+                } catch (IllegalArgumentException e) {
                     String err = "repeat \n" +
                             "Invalid mpaaRating format\n" +
                             "write data again: \n";
                     output.append(err);
                     output.sendOutput(ServerConnection.clientChannel);
                     try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel)).trim();
+                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
+                                .trim();
                     } catch (IOException ex) {
                         System.out.println("IOException in WORKER : mpaaRating :" + ex);
                     }
@@ -170,18 +178,19 @@ public class Worker implements Command {
         setters.put("directorName", director::setName);
         System.out.println("Woker - Code - 9");
         setters.put("directorHeight", s -> {
-            while (true){
+            while (true) {
                 try {
                     director.setHeight(Integer.parseInt(s));
                     break;
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     String err = "repeat \n" +
                             "Invalid directorHeight format\n" +
                             "write data again: \n";
                     output.append(err);
                     output.sendOutput(ServerConnection.clientChannel);
                     try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel)).trim();
+                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
+                                .trim();
                     } catch (IOException ex) {
                         System.out.println("IOException in WORKER : directorHeight :" + ex);
                     }
@@ -192,18 +201,19 @@ public class Worker implements Command {
         System.out.println("Woker - Code - 10");
 
         setters.put("directorEyeColor", s -> {
-            while (true){
+            while (true) {
                 try {
                     director.setEyeColor(Color.valueOf(s));
                     break;
-                }catch (IllegalArgumentException e){
+                } catch (IllegalArgumentException e) {
                     String err = "repeat \n" +
                             "Invalid directorEyeColor format\n" +
                             "write data again: \n";
                     output.append(err);
                     output.sendOutput(ServerConnection.clientChannel);
                     try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel)).trim();
+                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
+                                .trim();
                     } catch (IOException ex) {
                         System.out.println("IOException in WORKER : directorEyeColor :" + ex);
                     }
@@ -213,7 +223,7 @@ public class Worker implements Command {
 
         System.out.println("Woker - Code - 11");
         setters.put("directorBirthday", s -> {
-            while (true){
+            while (true) {
                 try {
                     LocalDate birthday = LocalDate.parse(s);
                     ZoneId zoneId = ZoneId.of("Europe/Moscow"); // Or use your desired time zone
@@ -227,7 +237,8 @@ public class Worker implements Command {
                     output.append(err);
                     output.sendOutput(ServerConnection.clientChannel);
                     try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel)).trim();
+                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
+                                .trim();
                     } catch (IOException ex) {
                         System.out.println("IOException in WORKER : directorBirthday :" + ex);
                     }
@@ -236,7 +247,7 @@ public class Worker implements Command {
         });
         System.out.println("Woker - Code - 12");
         setters.put("location", s -> {
-            while (true){
+            while (true) {
                 String[] locationValues = s.split(" ");
                 if (locationValues.length != 3) {
                     String err = "repeat \n" +
@@ -245,11 +256,12 @@ public class Worker implements Command {
                     output.append(err);
                     output.sendOutput(ServerConnection.clientChannel);
                     try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel)).trim();
+                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
+                                .trim();
                     } catch (IOException ex) {
                         System.out.println("IOException in WORKER : location :" + ex);
                     }
-                }else {
+                } else {
                     try {
                         double x = Double.parseDouble(locationValues[0]);
                         double y = Double.parseDouble(locationValues[1]);
@@ -265,7 +277,9 @@ public class Worker implements Command {
                         output.append(err);
                         output.sendOutput(ServerConnection.clientChannel);
                         try {
-                            s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel)).trim();
+                            s = Objects
+                                    .requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
+                                    .trim();
                         } catch (IOException ex) {
                             System.out.println("IOException in WORKER : location :" + ex);
                         }
@@ -277,14 +291,14 @@ public class Worker implements Command {
 
         movie.setCreationDate(ZonedDateTime.now());
         System.out.println("Woker - Code - 14");
+        System.out.println(director);
         movie.setDirector(director);
         System.out.println("Woker - Code - 15");
-
 
         System.out.println("Woker - Code - end");
         return new MethodReturn(setters, movie);
     }
 
-
-    public void execute(CommandOutput output){}
+    public void execute(CommandOutput output) {
+    }
 }

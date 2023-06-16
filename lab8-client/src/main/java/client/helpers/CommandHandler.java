@@ -3,6 +3,7 @@ package client.helpers;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 import client.gui.ClientConnectionGUI;
 import helpers.CommandObject;
@@ -18,7 +19,7 @@ public class CommandHandler {
         // Split the command into its components
         System.out.println(command);
         String[] parts = command.trim().split("\\s+");
-        // System.out.println(Arrays.toString(parts));
+        System.out.println(Arrays.toString(parts));
         // Check if the command is valid and has the correct syntax
         if (parts.length == 0 || parts.length >= 5 || !isValidCommand(parts[0])) {
             System.out.println("Invalid command syntax by parts");

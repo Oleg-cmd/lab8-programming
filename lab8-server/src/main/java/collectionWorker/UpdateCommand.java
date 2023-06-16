@@ -11,7 +11,8 @@ import java.util.HashMap;
 import java.util.function.Consumer;
 
 /**
- Represents an UpdateCommand which updates an element in a collection by its ID
+ * Represents an UpdateCommand which updates an element in a collection by its
+ * ID
  */
 public class UpdateCommand implements Command {
     private CollectionManager collectionManager;
@@ -19,6 +20,7 @@ public class UpdateCommand implements Command {
     public void setCollectionManager(CollectionManager collectionManager) {
         this.collectionManager = collectionManager;
     }
+
     public static String name = "update";
     public static String info = name + " id field value command:\n" +
             "   This command will update an element by it's id\n";
@@ -30,11 +32,13 @@ public class UpdateCommand implements Command {
     public UpdateCommand() {
     }
 
-    public static void UpdatingArgs(String idStr, String field, String value, CommandOutput output, CollectionManager collectionManager){
-        try{
+    public static void UpdatingArgs(String idStr, String field, String value, CommandOutput output,
+            CollectionManager collectionManager) {
+        try {
             int id = Integer.parseInt(idStr);
             Movie movie = collectionManager.getById(id);
-            if(movie != null){
+            if (movie != null) {
+                System.out.println(movie);
                 MethodReturn custom = Worker.Code(movie, output);
                 HashMap<String, Consumer<String>> setters = custom.setters();
                 if (!setters.containsKey(field)) {
@@ -42,35 +46,36 @@ public class UpdateCommand implements Command {
                     output.append("Field " + field + " is not updatable");
                     writer.newLine();
                     writer.flush();
-                }else{
+                } else {
                     if (value.isEmpty()) {
                         System.out.println(field + " cannot be empty");
                         output.append(field + " cannot be empty");
                     }
                     setters.get(field).accept(value);
                     movie = custom.movie();
+                    System.out.println("new movie: " + movie);
                     System.out.println("Ur field was updated successfully");
                     output.append("Ur field was updated successfully");
                 }
-            }else {
+            } else {
                 System.out.println("bad id provided");
                 output.append("bad id provided");
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Some errors: " + e);
             output.append("Some errors while updating");
         }
 
     }
 
-    public void Updating(CommandOutput output){
-        try{
+    public void Updating(CommandOutput output) {
+        try {
             System.out.print("Please enter the ID of the movie you want to update:");
 
             int id = Integer.parseInt(reader.readLine().trim());
             Movie movie = collectionManager.getById(id);
 
-            if(movie != null){
+            if (movie != null) {
                 System.out.println("Enter the field you want to update:");
                 MethodReturn custom = Worker.Code(movie, output);
                 HashMap<String, Consumer<String>> setters = custom.setters();
@@ -80,7 +85,7 @@ public class UpdateCommand implements Command {
                     System.out.println("Field " + field + " is not updatable");
                     writer.newLine();
                     writer.flush();
-                }else{
+                } else {
                     System.out.println(field + ": ");
                     String value = reader.readLine().trim();
                     if (value.isEmpty()) {
@@ -90,15 +95,17 @@ public class UpdateCommand implements Command {
                     movie = custom.movie();
                     System.out.println("Ur field was updated successfully");
                 }
-            }else {
+            } else {
                 System.out.println("bad id provided");
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e);
         }
     }
+
     /**
-     * Executes the update command by prompting the user to enter the ID of the movie to be updated and the field to update,
+     * Executes the update command by prompting the user to enter the ID of the
+     * movie to be updated and the field to update,
      * and then updating the specified field of the movie.
      */
 

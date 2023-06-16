@@ -43,7 +43,8 @@ public class ServerConnection {
     private static int MAX_THREADS = 128;
 
     // ExecutorService executor = Executors.newCachedThreadPool();
-    public static ExecutorService readExecutor = Executors.newCachedThreadPool();
+    // Создание долгоживущего readExecutor
+    public static ExecutorService readExecutor = Executors.newFixedThreadPool(MAX_THREADS);
 
     public void start() throws IOException, InterruptedException, ClassNotFoundException {
         UserCollectionManager userCollectionManager = new UserCollectionManager();
@@ -135,10 +136,7 @@ public class ServerConnection {
             // Pause for 1 second before sending the list of available commands
             Thread.sleep(1);
 
-            // Create a new thread pool for this connection
-            ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
-            executor.execute(new LoginHandler(clientChannel, session, key));
-            executor.shutdown();
+            readExecutor.execute(new LoginHandler(clientChannel, session, key));
         } catch (IOException | InterruptedException e) {
             logger.warn(e);
         }

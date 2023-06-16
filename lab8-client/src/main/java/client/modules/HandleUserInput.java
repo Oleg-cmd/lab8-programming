@@ -37,26 +37,37 @@ public class HandleUserInput {
                     if (key.isReadable()) {
                         SocketChannel channel = (SocketChannel) key.channel();
                         defaultChannel = channel;
-                        buffer.clear();
-                        int bytesRead = channel.read(buffer);
-                        if (bytesRead == -1) {
-                            // The server has closed the connection
-                            System.out.println("Server has closed the connection");
-                            return;
-                        }
-                        buffer.flip();
 
-                        Charset charset = StandardCharsets.UTF_8;
-                        CharsetDecoder decoder = charset.newDecoder();
-                        String receivedData;
-                        try {
-                            receivedData = decoder.decode(buffer).toString();
-                        } catch (CharacterCodingException e) {
-                            // Error decoding data
-                            System.out.println("Failed to decode received data: " + e.getMessage());
-                            return;
+                        StringBuilder receivedDataBuilder = new StringBuilder();
+                        while (true) {
+                            buffer.clear();
+                            int bytesRead = channel.read(buffer);
+                            if (bytesRead == -1) {
+                                // The server has closed the connection
+                                System.out.println("Server has closed the connection");
+                                return;
+                            }
+                            buffer.flip();
+
+                            Charset charset = StandardCharsets.UTF_8;
+                            CharsetDecoder decoder = charset.newDecoder();
+                            String receivedDataPart;
+                            try {
+                                receivedDataPart = decoder.decode(buffer).toString();
+                            } catch (CharacterCodingException e) {
+                                // Error decoding data
+                                System.out.println("Failed to decode received data: " + e.getMessage());
+                                return;
+                            }
+
+                            receivedDataBuilder.append(receivedDataPart);
+                            if (bytesRead < 1024) {
+                                // We have read all the data
+                                break;
+                            }
                         }
 
+                        String receivedData = receivedDataBuilder.toString();
                         System.out.println(receivedData);
 
                         String[] tokensFree = receivedData.split("\n");

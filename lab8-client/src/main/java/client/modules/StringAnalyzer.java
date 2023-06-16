@@ -51,11 +51,20 @@ public class StringAnalyzer {
             isStep = true;
             String[] lines = receivedData.split("\n");
             if (lines.length >= 2) {
-                String data = lines[1];
-                System.out.println("Parsing");
-                MovieManager.movies = MovieParser.parseMovies(data);
-                MovieManager.setupMovies(Setup.setupScene);
-                System.out.println(MovieManager.movies);
+                if (lines[1].contains("empty")) {
+                    System.out.println("Setuping clear collection");
+                    MovieManager.movies = null;
+                    MovieManager.setupMovies(Setup.setupScene);
+                } else {
+                    String data = lines[1];
+                    System.out.println("Parsing");
+                    MovieManager.movies = MovieParser.parseMovies(data);
+                    MovieManager.setupMovies(Setup.setupScene);
+                    System.out.println(MovieManager.movies);
+                }
+
+            } else {
+                System.out.println("Some kind of error was made by recieving data from server");
             }
         }
 

@@ -8,7 +8,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import client.modules.ClientLogic;
 import client.modules.HandleUserInput;
@@ -19,7 +22,6 @@ import java.net.URL;
 public class ClientConnectionGUI extends Application {
     private static Stage mainStage; // Статическая переменная для хранения ссылки на Stage
     private static Thread clientThread; // Хранение ссылки на поток ClientLogic
-    private static TextArea logTextArea;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -28,7 +30,6 @@ public class ClientConnectionGUI extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL xmlUrl = getClass().getResource("/fx/screens/loading.fxml");
         loader.setLocation(xmlUrl);
-        Parent loadingScreen = loader.load();
         // Установка сцены на основной Stage
         primaryStage.setTitle("GUI");
         // Отображение GUI
@@ -160,7 +161,20 @@ public class ClientConnectionGUI extends Application {
             System.out.println("updateTextArea() called");
             if (mainStage != null) {
                 Scene scene = mainStage.getScene();
+                VBox ccVbox = (VBox) scene.lookup("#ccVbox");
+
+                // Remove all children from VBox except the button
+                Button exact = (Button) scene.lookup("#ccButton");
+                ccVbox.getChildren().removeIf(node -> node != exact);
+
                 TextArea area = (TextArea) scene.lookup("#txtarea");
+                if (area == null) {
+                    // If TextArea doesn't exist, create and add it to the scene
+                    area = new TextArea();
+                    area.setId("txtarea");
+                    VBox.setVgrow(area, Priority.ALWAYS); // Make TextArea grow vertically
+                    ccVbox.getChildren().add(area);
+                }
                 area.setText(text);
                 mainStage.setScene(scene);
                 mainStage.show();
@@ -168,6 +182,50 @@ public class ClientConnectionGUI extends Application {
                 System.out.println("mainStage is null");
             }
         });
+    }
+
+    public static void clearTextArea() {
+        Platform.runLater(() -> {
+            System.out.println("clearTextArea() called");
+            if (mainStage != null) {
+                Scene scene = mainStage.getScene();
+                TextArea area = (TextArea) scene.lookup("#txtarea");
+                if (area != null) {
+                    area.setText(null);
+                }
+                mainStage.setScene(scene);
+                mainStage.show();
+            } else {
+                System.out.println("mainStage is null");
+            }
+        });
+    }
+
+    public static Scene resetCC() {
+        System.out.println("resetCC() called");
+        if (mainStage != null) {
+            Scene scene = mainStage.getScene();
+            VBox ccVbox = (VBox) scene.lookup("#ccVbox");
+            TextArea area = (TextArea) scene.lookup("#txtarea");
+            if (area == null) {
+                System.out.println("area is null, deleting other things");
+                // Remove all children from VBox except the button
+                Button exact = (Button) scene.lookup("#ccButton");
+                ccVbox.getChildren().removeIf(node -> node != exact);
+                System.out.println("deleting success");
+            } else {
+                System.out.println("deleting area");
+                ccVbox.getChildren().remove(area);
+                System.out.println("deleting success");
+            }
+            System.out.println("setScene resetCC()");
+            mainStage.setScene(scene);
+            mainStage.show();
+            return scene;
+        } else {
+            System.out.println("mainstage is null");
+            return Setup.setupScene;
+        }
 
     }
 

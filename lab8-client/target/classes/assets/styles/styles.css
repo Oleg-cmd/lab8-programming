@@ -16,3 +16,9 @@
     -fx-border-width: 1px 1px 1px 1px; /* Толщина границы: верхняя, правая, нижняя, левая */
     -fx-border-color: black; /* Цвет границы */
 }
+
+.input{
+    -fx-background-color: rgb(0,0,0);
+    -fx-border-color: #fff;
+    -fx-text-fill: #fff;
+}

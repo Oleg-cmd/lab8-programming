@@ -17,7 +17,7 @@
 
 <AnchorPane prefHeight="1000.0" prefWidth="1000.0" style="-fx-background-color: #151515;" stylesheets="@../../assets/styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ClientConnectionGUI">
    <children>
-      <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="895.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="899.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../assets/images/pr.png" />
          </image>
@@ -69,140 +69,145 @@
             <Button fx:id="find" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Find by Name" />
          </children>
       </VBox>
-      <Label fx:id="username" layoutX="905.0" layoutY="99.0" text="User" textFill="WHITE" />
+      <Label fx:id="username" layoutX="907.0" layoutY="139.0" text="User" textFill="WHITE" />
       <ScrollPane fx:id="scrollpane" hbarPolicy="NEVER" hmax="0.0" layoutX="73.0" layoutY="506.0" pannable="true" prefHeight="437.0" prefWidth="763.0">
         <content>
           <AnchorPane prefHeight="503.0" prefWidth="761.0" stylesheets="@../../assets/styles/styles.css">
                <children>
-                  <VBox alignment="CENTER" layoutX="4.0" layoutY="17.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="180.0" prefWidth="739.0" style="-fx-border-width: 0; -fx-border-color: black;" fx:id="xvbox">
+                  <VBox fx:id="mainV" layoutX="15.0" layoutY="17.0" prefHeight="417.0" prefWidth="718.0">
                      <children>
-                        <GridPane fx:id="grid" alignment="CENTER" prefHeight="132.0" prefWidth="716.0" style="-fx-background-color: #989BBE; -fx-padding: 0 0 0 0; -fx-background-radius: 8px; -fx-border-radius: 8px;" styleClass="b-b" vgap="15.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.20130920410156" minWidth="10.0" prefWidth="168.6745147705078" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.47647094726562" minWidth="10.0" prefWidth="162.8254852294922" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.47647094726562" minWidth="10.0" prefWidth="162.8254852294922" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.47647094726562" minWidth="10.0" prefWidth="162.8254852294922" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.47647094726562" minWidth="10.0" prefWidth="162.8254852294922" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="52.93971252441406" minHeight="0.0" prefHeight="45.063507080078125" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="52.436492919921875" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <VBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="177.0" prefWidth="616.0" style="-fx-border-width: 0; -fx-border-color: black;" fx:id="xvbox">
                            <children>
-                              <GridPane styleClass="grid-pane" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                              <GridPane fx:id="grid" alignment="CENTER" prefHeight="132.0" prefWidth="716.0" style="-fx-background-color: #989BBE; -fx-padding: 0 0 0 0; -fx-background-radius: 8px; -fx-border-radius: 8px;" styleClass="b-b" vgap="15.0">
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.20130920410156" minWidth="10.0" prefWidth="168.6745147705078" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.47647094726562" minWidth="10.0" prefWidth="162.8254852294922" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.47647094726562" minWidth="10.0" prefWidth="162.8254852294922" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.47647094726562" minWidth="10.0" prefWidth="162.8254852294922" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.47647094726562" minWidth="10.0" prefWidth="162.8254852294922" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="52.93971252441406" minHeight="0.0" prefHeight="45.063507080078125" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="52.436492919921875" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" styleClass="text" text="Label" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="150.0" styleClass="text" text="Label" GridPane.rowIndex="2" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="150.0" styleClass="text" text="Label" GridPane.rowIndex="1" />
-                                 </children>
-                              </GridPane>
-                              <GridPane prefHeight="0.0" prefWidth="142.0" GridPane.columnIndex="1">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="71.08755493164062" minWidth="10.0" prefWidth="71.08755493164062" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="72.08755493164062" minWidth="10.0" prefWidth="69.91244506835938" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" text="Label" GridPane.columnIndex="1">
-                                       <styleClass>
-                                          <String fx:value="text" />
-                                          <String fx:value="grid-pane" />
-                                       </styleClass>
-                                    </Label>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" text="Label">
-                                       <styleClass>
-                                          <String fx:value="text" />
-                                          <String fx:value="grid-pane" />
-                                       </styleClass>
-                                    </Label>
-                                 </children>
-                              </GridPane>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="146.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <styleClass>
-                                    <String fx:value="text" />
-                                    <String fx:value="grid-pane" />
-                                 </styleClass>
-                              </Label>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" text="Label" GridPane.columnIndex="2">
-                                 <styleClass>
-                                    <String fx:value="text" />
-                                    <String fx:value="grid-pane" />
-                                 </styleClass>
-                              </Label>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="145.0" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                 <styleClass>
-                                    <String fx:value="text" />
-                                    <String fx:value="grid-pane" />
-                                 </styleClass>
-                              </Label>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" text="Label" GridPane.columnIndex="3">
-                                 <styleClass>
-                                    <String fx:value="text" />
-                                    <String fx:value="grid-pane" />
-                                 </styleClass>
-                              </Label>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                 <styleClass>
-                                    <String fx:value="text" />
-                                    <String fx:value="grid-pane" />
-                                 </styleClass>
-                              </Label>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="Label" GridPane.columnIndex="4" />
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="Label" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                              <GridPane styleClass="grid-pane" GridPane.rowIndex="1">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" styleClass="text" text="Label" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="150.0" styleClass="text" text="Label" GridPane.rowIndex="2" />
-                                    <GridPane alignment="CENTER" GridPane.rowIndex="1">
+                                    <GridPane styleClass="grid-pane" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label fx:id="director" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" styleClass="text" text="Director (a-z)" />
+                                          <Label fx:id="height" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="150.0" styleClass="text" text="height (&lt;&gt;)" GridPane.rowIndex="2" />
+                                          <Label fx:id="birthday" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="150.0" styleClass="text" text="birthday (&lt;date&gt;)" GridPane.rowIndex="1" />
+                                       </children>
+                                    </GridPane>
+                                    <GridPane prefHeight="0.0" prefWidth="142.0" GridPane.columnIndex="1">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="71.08755493164062" minWidth="10.0" prefWidth="71.08755493164062" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="72.08755493164062" minWidth="10.0" prefWidth="69.91244506835938" />
                                       </columnConstraints>
                                       <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Label alignment="CENTER" prefHeight="17.0" prefWidth="81.0" text="Label">
+                                          <Label fx:id="movieY" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" text=" y (&lt;&gt;)" GridPane.columnIndex="1">
                                              <styleClass>
                                                 <String fx:value="text" />
                                                 <String fx:value="grid-pane" />
                                              </styleClass>
                                           </Label>
-                                          <Label alignment="CENTER" prefHeight="17.0" prefWidth="78.0" styleClass="text" text="Label" GridPane.columnIndex="1" />
+                                          <Label fx:id="movieX" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" text="x (&lt;&gt;)">
+                                             <styleClass>
+                                                <String fx:value="text" />
+                                                <String fx:value="grid-pane" />
+                                             </styleClass>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                    <Label fx:id="movieName" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="146.0" text="name (a-z)" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <styleClass>
+                                          <String fx:value="text" />
+                                          <String fx:value="grid-pane" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="oscarsCount" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" text="oscarsCount (&lt;&gt;)" GridPane.columnIndex="2">
+                                       <styleClass>
+                                          <String fx:value="text" />
+                                          <String fx:value="grid-pane" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="goldenPalmCount" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="145.0" text="goldenPalm (&lt;&gt;)" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                       <styleClass>
+                                          <String fx:value="text" />
+                                          <String fx:value="grid-pane" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="tagline" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" text="tagline (size)" GridPane.columnIndex="3">
+                                       <styleClass>
+                                          <String fx:value="text" />
+                                          <String fx:value="grid-pane" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="mpaaRating" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" text="mpaaRating (&gt;R&lt;)" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                       <styleClass>
+                                          <String fx:value="text" />
+                                          <String fx:value="grid-pane" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="movieId" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="id (&lt;&gt;)" GridPane.columnIndex="4" />
+                                    <Label fx:id="creationDate" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="text" text="creationDate (&lt;d&gt;)" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                    <GridPane styleClass="grid-pane" GridPane.rowIndex="1">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label fx:id="eyeColor" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="151.0" styleClass="text" text="eyeColor (a-z)" />
+                                          <Label fx:id="place" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="150.0" styleClass="text" text="place (a-z)" GridPane.rowIndex="2" />
+                                          <GridPane alignment="CENTER" GridPane.rowIndex="1">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label fx:id="directorX" accessibleRole="BUTTON" alignment="CENTER" prefHeight="17.0" prefWidth="81.0" text="x (&lt;&gt;)">
+                                                   <styleClass>
+                                                      <String fx:value="text" />
+                                                      <String fx:value="grid-pane" />
+                                                   </styleClass>
+                                                </Label>
+                                                <Label fx:id="directorY" accessibleRole="BUTTON" alignment="CENTER" prefHeight="17.0" prefWidth="78.0" styleClass="text" text="y (&lt;&gt;)" GridPane.columnIndex="1" />
+                                             </children>
+                                          </GridPane>
                                        </children>
                                     </GridPane>
                                  </children>
                               </GridPane>
+                              <VBox prefHeight="61.0" prefWidth="728.0" />
                            </children>
-                        </GridPane>
+                        </VBox>
                      </children>
                   </VBox>
                </children>
             </AnchorPane>
         </content>
       </ScrollPane>
-      <VBox layoutX="475.0" layoutY="183.0" prefHeight="239.0" prefWidth="359.0" style="-fx-background-color: #989BBE; -fx-background-radius: 6px;">
+      <VBox fx:id="ccVbox" layoutX="475.0" layoutY="183.0" prefHeight="260.0" prefWidth="359.0" style="-fx-background-color: #989BBE; -fx-background-radius: 6px;">
          <children>
-            <Button mnemonicParsing="false" prefHeight="19.0" prefWidth="359.0" style="-fx-background-color: #512DA8; -fx-text-fill: #fff; -fx-border-radius: 6px;" text="Control centre" />
-            <TextArea fx:id="txtarea" prefHeight="216.0" prefWidth="359.0" style="-fx-background-color: #989BBE;" wrapText="true" />
+            <Button fx:id="ccButton" mnemonicParsing="false" prefHeight="19.0" prefWidth="359.0" style="-fx-background-color: #512DA8; -fx-text-fill: #fff; -fx-border-radius: 6px;" text="Control centre" />
+            <TextArea fx:id="txtarea" prefHeight="697.0" prefWidth="359.0" style="-fx-background-color: #989BBE;" wrapText="true" />
          </children>
       </VBox>
       <Button layoutX="407.0" layoutY="954.0" mnemonicParsing="false" style="-fx-background-color: #512DA8; -fx-text-fill: #fff;" text="visualization" />
@@ -214,5 +219,16 @@
                </font>
             </Label>
          </children></HBox>
+      <VBox layoutX="72.0" layoutY="314.0" prefHeight="128.0" prefWidth="376.0" style="-fx-background-color: #fff; -fx-background-radius: 6px;">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="28.0" prefWidth="407.0" style="-fx-background-color: #512DA8; -fx-text-fill: #fff; -fx-border-radius: 6px;" text="Addictional Filters" />
+         </children>
+      </VBox>
+      <VBox fx:id="infoBox" layoutX="858.0" layoutY="181.0" prefHeight="760.0" prefWidth="125.0" style="-fx-background-color: #fff; -fx-background-radius: 6px;">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="125.0" style="-fx-background-color: #512DA8; -fx-text-fill: #fff; -fx-border-radius: 6px;" text="Info" />
+            <TextArea fx:id="infoArea" prefHeight="761.0" prefWidth="125.0" wrapText="true" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

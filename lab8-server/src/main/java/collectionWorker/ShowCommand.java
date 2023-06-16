@@ -36,18 +36,13 @@ public class ShowCommand implements Command {
         StringBuilder sb = new StringBuilder();
         ;
         if (movies.isEmpty()) {
-            try {
-                writer.write("The collection is empty.");
-                output.append("The collection is empty.");
-                return;
-            } catch (IOException e) {
-                System.out.println(e);
-            }
-
+            sb.append("show-c\n");
+            sb.append("The collection is empty.");
         } else {
             sb.append("show-c\n");
             for (Movie movie : movies) {
                 sb.append(movie.toString());
+                sb.append("###");
             }
         }
 

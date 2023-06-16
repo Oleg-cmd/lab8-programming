@@ -78,7 +78,6 @@ public class ClientSession implements Runnable {
 
     public void close() throws IOException {
         UserCollectionManager.deleteCollectionManager(getUserId());
-        executor.shutdownNow();
         clientChannel.close();
     }
 
@@ -105,12 +104,6 @@ public class ClientSession implements Runnable {
 
     public static Collection<Movie> loadObjects() {
         return DatabaseManager.loadMovies(ServerConnection.getUserIdForSession(ServerConnection.clientChannel));
-    }
-
-    // addictional func for any reasons
-    public void reload() {
-        executor.shutdown();
-        executor = Executors.newFixedThreadPool(NUM_THREADS);
     }
 
 }

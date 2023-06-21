@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="1000.0" style="-fx-background-color: #151515;" stylesheets="@../../assets/styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ClientConnectionGUI">
+<AnchorPane prefHeight="1000.0" prefWidth="1000.0" style="-fx-background-color: #151515;" stylesheets="@../../assets/styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.controllers.ClientConnectionGUI">
    <children>
       <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="899.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -62,11 +62,11 @@
             <HBox prefHeight="0.0" prefWidth="157.0" />
          </children>
       </VBox>
-      <VBox fx:id="otherX" alignment="CENTER_LEFT" layoutX="672.0" layoutY="87.0" prefHeight="86.0" prefWidth="159.0" style="-fx-border-radius: 10px; -fx-background-color: #989BBE; -fx-padding: 1 1 1 1;">
+      <VBox fx:id="otherX" alignment="CENTER_LEFT" layoutX="672.0" layoutY="87.0" prefHeight="83.0" prefWidth="159.0" style="-fx-border-radius: 10px; -fx-background-color: #989BBE; -fx-padding: 1 1 1 1;">
          <children>
-            <Button fx:id="clear_history" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Clear History" />
-            <HBox prefHeight="15.0" prefWidth="162.0" />
-            <Button fx:id="find" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="btn" text="Find by Name" />
+            <Button fx:id="clear_history" mnemonicParsing="false" prefHeight="34.0" prefWidth="157.0" styleClass="btn" text="Clear History" />
+            <HBox prefHeight="6.0" prefWidth="157.0" />
+            <Button fx:id="add_xml" mnemonicParsing="false" prefHeight="34.0" prefWidth="157.0" styleClass="btn" text="Add_XML" />
          </children>
       </VBox>
       <Label fx:id="username" layoutX="907.0" layoutY="139.0" text="User" textFill="WHITE" />

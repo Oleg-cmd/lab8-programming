@@ -10,12 +10,13 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- The CollectionManager class manages a collection of movies.
+ * The CollectionManager class manages a collection of movies.
  */
 
 public class CollectionManager {
     private final HashSet<Movie> movies;
     private final ReadWriteLock lock;
+
     /**
      * Constructs a CollectionManager object with an empty collection of movies.
      */
@@ -27,6 +28,7 @@ public class CollectionManager {
 
     /**
      * Returns the collection of movies managed by this CollectionManager object.
+     * 
      * @return the collection of movies
      */
     public HashSet<Movie> getMovies() {
@@ -38,9 +40,9 @@ public class CollectionManager {
         }
     }
 
-
     /**
      * Adds a movie to the collection managed by this CollectionManager object.
+     * 
      * @param movie the movie to add
      */
     public void addMovie(Movie movie) {
@@ -52,9 +54,10 @@ public class CollectionManager {
         }
     }
 
-
     /**
-     * Adds a collection of movies to the collection managed by this CollectionManager object.
+     * Adds a collection of movies to the collection managed by this
+     * CollectionManager object.
+     * 
      * @param moviesToAdd the collection of movies to add
      */
 
@@ -70,7 +73,6 @@ public class CollectionManager {
             lock.writeLock().unlock();
         }
     }
-
 
     public Integer getRandomID() {
         Random rand = new Random();
@@ -90,8 +92,7 @@ public class CollectionManager {
         return id;
     }
 
-
-    public ZonedDateTime getNow(){
+    public ZonedDateTime getNow() {
         return ZonedDateTime.now();
     }
 
@@ -103,12 +104,15 @@ public class CollectionManager {
     public void removeMovie(Movie movie) {
         movies.remove(movie);
     }
-    public boolean removeId(Integer id){
+
+    public boolean removeId(Integer id) {
         return movies.remove(getById(id));
     }
 
     /**
-     * Returns the number of movies in the collection managed by this CollectionManager object.
+     * Returns the number of movies in the collection managed by this
+     * CollectionManager object.
+     * 
      * @return the number of movies
      */
 
@@ -117,7 +121,8 @@ public class CollectionManager {
     }
 
     /**
-     * Removes all movies from the collection managed by this CollectionManager object.
+     * Removes all movies from the collection managed by this CollectionManager
+     * object.
      */
 
     public void clearMovies() {
@@ -128,8 +133,11 @@ public class CollectionManager {
             lock.writeLock().unlock(); // Освобождение блокировки записи
         }
     }
+
     /**
-     * Returns the movie with the specified ID from the collection managed by this CollectionManager object.
+     * Returns the movie with the specified ID from the collection managed by this
+     * CollectionManager object.
+     * 
      * @param id the ID of the movie to find
      * @return the movie with the specified ID, or null if no such movie exists
      */
@@ -144,8 +152,10 @@ public class CollectionManager {
     }
 
     /**
-     * Returns a collection of movies from the collection managed by this CollectionManager object that have the specified
+     * Returns a collection of movies from the collection managed by this
+     * CollectionManager object that have the specified
      * number of Oscars.
+     * 
      * @param oscarsCount the number of Oscars to search for
      * @return the collection of movies with the specified number of Oscars
      */
@@ -159,4 +169,56 @@ public class CollectionManager {
         }
         return result;
     }
+
+    public boolean checkFieldsByNull(Movie movie) {
+        if (movie != null) {
+            if (movie.getId() == null || movie.getId() <= 0) {
+                return false;
+            }
+            if (movie.getName() == null || movie.getName().isEmpty()) {
+                return false;
+            }
+            if (movie.getCoordinates() == null || Float.compare(movie.getCoordinates().getX(), 0.0f) == 0
+                    || Float.compare(movie.getCoordinates().getY(), 0.0f) == 0) {
+                return false;
+            }
+            if (movie.getCreationDate() == null) {
+                return false;
+            }
+            if (movie.getOscarsCount() != null && movie.getOscarsCount() <= 0) {
+                return false;
+            }
+            if (movie.getGoldenPalmCount() == null || movie.getGoldenPalmCount() <= 0) {
+                return false;
+            }
+            if (movie.getTagline() == null || movie.getTagline().isEmpty()) {
+                return false;
+            }
+            if (movie.getMpaaRating() == null) {
+                return false;
+            }
+            if (movie.getDirector() == null || movie.getDirector().getName() == null
+                    || movie.getDirector().getName().isEmpty()) {
+                return false;
+            }
+            if (movie.getDirector().getBirthday() == null) {
+                return false;
+            }
+            if (movie.getDirector().getHeight() <= 0) {
+                return false;
+            }
+            if (movie.getDirector().getEyeColor() == null) {
+                return false;
+            }
+            if (movie.getDirector().getLocation() == null || movie.getDirector().getLocation().getName() == null
+                    || movie.getDirector().getLocation().getName().isEmpty()) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
 }

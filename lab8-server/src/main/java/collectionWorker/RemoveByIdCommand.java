@@ -5,8 +5,12 @@ import modules.CommandOutput;
 
 import java.io.IOException;
 
+import db.ClientSession;
+import db.DatabaseManager;
+
 /**
- This class represents a command to remove a movie from a collection by its ID.
+ * This class represents a command to remove a movie from a collection by its
+ * ID.
  */
 public class RemoveByIdCommand implements Command {
 
@@ -21,14 +25,15 @@ public class RemoveByIdCommand implements Command {
             "   This command will delete model with id that u entered (if this model exist)\n";
 
     /**
-     * Creates a new instance of the command with the given collection manager, reader, and writer.
+     * Creates a new instance of the command with the given collection manager,
+     * reader, and writer.
      */
 
     public RemoveByIdCommand() {
     }
 
-    public static void RemoveByArg(String idStr, CommandOutput output, CollectionManager collectionManager){
-        try{
+    public static void RemoveByArg(String idStr, CommandOutput output, CollectionManager collectionManager) {
+        try {
             try {
                 Integer id = Integer.parseInt(idStr);
                 boolean removed = collectionManager.removeId(id);
@@ -47,7 +52,7 @@ public class RemoveByIdCommand implements Command {
             writer.newLine();
             writer.flush();
 
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e);
         }
     }
@@ -55,12 +60,13 @@ public class RemoveByIdCommand implements Command {
     /**
      * Executes the command.
      *
-     * Asks the user to input an ID of a movie to remove, removes the movie from the collection,
+     * Asks the user to input an ID of a movie to remove, removes the movie from the
+     * collection,
      * and outputs a message indicating whether the movie was removed.
      */
     @Override
     public void execute(CommandOutput output) {
-        try{
+        try {
             writer.write("Enter movie ID to remove:");
             writer.newLine();
             writer.flush();
@@ -81,7 +87,7 @@ public class RemoveByIdCommand implements Command {
             writer.newLine();
             writer.flush();
 
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e);
         }
 

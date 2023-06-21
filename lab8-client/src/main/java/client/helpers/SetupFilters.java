@@ -2,7 +2,7 @@ package client.helpers;
 
 import java.util.Comparator;
 
-import client.gui.events.Setup;
+import client.gui.setups.Setup;
 import client.model.Movie;
 import javafx.scene.Node;
 import javafx.scene.control.Label;

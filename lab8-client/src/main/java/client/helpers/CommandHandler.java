@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
-import client.gui.ClientConnectionGUI;
+import client.gui.controllers.ClientConnectionGUI;
 import helpers.CommandObject;
 
 public class CommandHandler {
@@ -21,8 +21,10 @@ public class CommandHandler {
         String[] parts = command.trim().split("\\s+");
         System.out.println(Arrays.toString(parts));
         // Check if the command is valid and has the correct syntax
-        if (parts.length == 0 || parts.length >= 5 || !isValidCommand(parts[0])) {
-            System.out.println("Invalid command syntax by parts");
+        if (parts.length == 0 || parts.length >= 10 || !isValidCommand(parts[0])) {
+            String s = "Invalid command syntax by parts";
+            System.out.println(s);
+            ClientConnectionGUI.updateInfoArea(s + "\n" + parts);
             return null;
         }
         if (hasTokens(parts)) {
@@ -35,7 +37,9 @@ public class CommandHandler {
 
             return InputHandler.toExecute(command, null);
         } else {
-            System.out.println("U cant use it without args");
+            String s = "U cant use it without args";
+            System.out.println(s);
+            ClientConnectionGUI.updateInfoArea(s);
         }
         return null;
     }
@@ -60,7 +64,7 @@ public class CommandHandler {
                     || tokens[0].equals("remove_by_id") || tokens[0].equals("remove_lower")) && tokens.length == 2) {
                 return true;
             }
-            if (tokens[0].equals("update") && tokens.length == 4) {
+            if (tokens[0].equals("update") && tokens.length >= 4) {
                 return true;
             }
             return false;

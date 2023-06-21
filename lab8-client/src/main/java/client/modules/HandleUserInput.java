@@ -1,6 +1,6 @@
 package client.modules;
 
-import client.gui.ClientConnectionGUI;
+import client.gui.controllers.ClientConnectionGUI;
 import client.helpers.CommandHandler;
 import helpers.CommandObject;
 import javafx.application.Platform;

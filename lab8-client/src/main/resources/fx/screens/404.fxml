@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ClientConnectionGUI">
+<AnchorPane prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.controllers.ClientConnectionGUI">
    <children>
       <VBox alignment="CENTER" layoutX="-6.0" layoutY="-2.0" prefHeight="1003.0" prefWidth="1006.0" style="-fx-background-color: rgb(0,0,0);">
          <children>

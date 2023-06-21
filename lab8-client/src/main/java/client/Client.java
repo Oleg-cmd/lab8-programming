@@ -1,6 +1,6 @@
 package client;
 
-import client.gui.ClientConnectionGUI;
+import client.gui.controllers.ClientConnectionGUI;
 import client.helpers.SymbolicPrintStream;
 import javafx.application.Application;
 import javafx.stage.Stage;

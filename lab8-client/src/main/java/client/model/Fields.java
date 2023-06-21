@@ -1,7 +1,6 @@
 package client.model;
 
 public enum Fields {
-    id,
     mpaaRating,
     location,
     directorEyeColor,

@@ -842,3 +842,144 @@
 2023-06-17 00:11:17,943 WARN m.ServerConnection [main] java.net.BindException: Address already in use
 2023-06-17 01:35:51,762 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: null
 2023-06-17 01:35:51,763 WARN r.HandleClientInput [pool-2-thread-8] Client channel is closed
+2023-06-17 01:58:39,258 WARN r.HandleClientInput [pool-2-thread-7] Client channel is closed
+2023-06-17 01:58:39,258 WARN m.ServerConnection [pool-2-thread-5] java.nio.channels.ClosedChannelException
+2023-06-17 01:58:39,258 WARN m.ServerConnection [pool-2-thread-6] java.nio.channels.ClosedChannelException
+2023-06-17 02:02:10,363 WARN r.HandleClientInput [pool-2-thread-6] Client channel is closed
+2023-06-17 02:02:10,364 WARN m.ServerConnection [pool-2-thread-5] java.nio.channels.ClosedChannelException
+2023-06-17 02:21:57,420 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: null
+2023-06-17 02:21:57,419 WARN r.HandleClientInput [pool-2-thread-9] Client channel is closed
+2023-06-17 02:21:57,420 WARN r.HandleClientInput [pool-2-thread-10] Client channel is closed
+2023-06-17 02:21:57,421 WARN m.ServerConnection [pool-2-thread-8] java.nio.channels.ClosedChannelException
+2023-06-17 02:22:32,857 ERROR r.ReadFromClient [Thread-0] Error reading object from input stream: null
+2023-06-17 02:25:18,806 ERROR r.ReadFromClient [Thread-0] Error reading object from input stream: invalid stream header: 6666660A
+2023-06-17 02:36:09,510 WARN r.HandleClientInput [pool-2-thread-9] Client channel is closed
+2023-06-17 02:38:30,325 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: null
+2023-06-17 02:38:30,327 WARN m.ServerConnection [pool-2-thread-19] java.nio.channels.ClosedChannelException
+2023-06-17 02:38:30,327 WARN r.HandleClientInput [pool-2-thread-20] Client channel is closed
+2023-06-17 02:46:44,520 WARN m.ServerConnection [pool-2-thread-24] java.nio.channels.ClosedChannelException
+2023-06-17 02:46:44,520 WARN r.HandleClientInput [pool-2-thread-25] Client channel is closed
+2023-06-17 02:49:01,848 WARN m.ServerConnection [pool-2-thread-29] java.nio.channels.ClosedChannelException
+2023-06-17 02:49:01,848 WARN r.HandleClientInput [pool-2-thread-30] Client channel is closed
+2023-06-17 02:49:57,746 WARN m.ServerConnection [pool-2-thread-34] java.nio.channels.ClosedChannelException
+2023-06-17 02:49:57,746 WARN r.HandleClientInput [pool-2-thread-35] Client channel is closed
+2023-06-17 02:56:37,913 WARN r.HandleClientInput [pool-2-thread-41] Client channel is closed
+2023-06-17 03:02:42,934 WARN m.ServerConnection [pool-2-thread-51] java.nio.channels.ClosedChannelException
+2023-06-17 03:02:42,933 WARN r.HandleClientInput [pool-2-thread-52] Client channel is closed
+2023-06-17 03:08:19,788 WARN r.HandleClientInput [pool-2-thread-59] Client channel is closed
+2023-06-17 03:09:08,594 WARN m.ServerConnection [pool-2-thread-65] java.nio.channels.ClosedChannelException
+2023-06-17 03:09:08,595 WARN r.HandleClientInput [pool-2-thread-66] Client channel is closed
+2023-06-17 03:16:23,594 WARN m.ServerConnection [pool-2-thread-72] java.nio.channels.ClosedChannelException
+2023-06-17 03:16:23,595 WARN r.HandleClientInput [pool-2-thread-73] Client channel is closed
+2023-06-17 03:19:13,356 WARN r.HandleClientInput [pool-2-thread-9] Client channel is closed
+2023-06-17 03:19:13,358 WARN m.ServerConnection [pool-2-thread-8] java.nio.channels.ClosedChannelException
+2023-06-19 22:56:25,009 WARN r.HandleClientInput [pool-2-thread-14] Client channel is closed
+2023-06-19 22:56:25,010 WARN r.HandleClientInput [pool-2-thread-15] Client channel is closed
+2023-06-19 22:57:22,344 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: null
+2023-06-19 22:57:22,345 WARN m.ServerConnection [pool-2-thread-20] java.nio.channels.ClosedChannelException
+2023-06-19 22:57:22,345 WARN r.HandleClientInput [pool-2-thread-21] Client channel is closed
+2023-06-19 23:01:38,572 WARN m.ServerConnection [pool-2-thread-25] java.nio.channels.ClosedChannelException
+2023-06-19 23:01:38,573 WARN r.HandleClientInput [pool-2-thread-26] Client channel is closed
+2023-06-19 23:02:03,689 WARN m.ServerConnection [pool-2-thread-30] java.nio.channels.ClosedChannelException
+2023-06-19 23:02:03,690 WARN r.HandleClientInput [pool-2-thread-31] Client channel is closed
+2023-06-19 23:05:00,637 WARN m.ServerConnection [pool-2-thread-35] java.nio.channels.ClosedChannelException
+2023-06-19 23:05:00,637 WARN r.HandleClientInput [pool-2-thread-36] Client channel is closed
+2023-06-19 23:06:13,621 WARN m.ServerConnection [pool-2-thread-40] java.nio.channels.ClosedChannelException
+2023-06-19 23:06:13,621 WARN r.HandleClientInput [pool-2-thread-41] Client channel is closed
+2023-06-19 23:10:10,998 WARN m.ServerConnection [pool-2-thread-45] java.nio.channels.ClosedChannelException
+2023-06-19 23:10:10,998 WARN r.HandleClientInput [pool-2-thread-46] Client channel is closed
+2023-06-19 23:41:36,046 WARN m.ServerConnection [pool-2-thread-50] java.nio.channels.ClosedChannelException
+2023-06-19 23:41:36,046 WARN r.HandleClientInput [pool-2-thread-51] Client channel is closed
+2023-06-19 23:43:48,207 WARN m.LoginHandler [pool-2-thread-52] Failed to close client channel: Broken pipe
+2023-06-19 23:43:48,207 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: Connection reset
+2023-06-19 23:43:48,208 WARN r.HandleClientInput [pool-2-thread-54] Client channel is closed
+2023-06-19 23:48:28,141 WARN r.HandleClientInput [pool-2-thread-58] Client channel is closed
+2023-06-19 23:53:53,199 WARN m.ServerConnection [pool-2-thread-66] java.nio.channels.ClosedChannelException
+2023-06-19 23:53:53,199 WARN r.HandleClientInput [pool-2-thread-67] Client channel is closed
+2023-06-19 23:56:13,230 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: null
+2023-06-19 23:56:13,230 WARN r.HandleClientInput [pool-2-thread-7] Client channel is closed
+2023-06-19 23:56:13,231 WARN m.ServerConnection [pool-2-thread-6] java.nio.channels.ClosedChannelException
+2023-06-19 23:56:13,231 WARN r.HandleClientInput [pool-2-thread-8] Client channel is closed
+2023-06-19 23:57:19,359 WARN r.HandleClientInput [pool-2-thread-7] Client channel is closed
+2023-06-19 23:57:19,359 WARN m.ServerConnection [pool-2-thread-6] java.nio.channels.ClosedChannelException
+2023-06-21 14:23:01,180 ERROR r.ReadFromClient [Thread-0] Error reading object from input stream: null
+2023-06-21 14:23:01,184 ERROR m.LoginHandler [pool-2-thread-1] java.nio.channels.ClosedChannelException
+2023-06-21 14:30:26,224 WARN r.HandleClientInput [pool-2-thread-17] Client channel is closed
+2023-06-21 14:30:27,005 WARN m.ServerConnection [pool-2-thread-19] java.nio.channels.ClosedChannelException
+2023-06-21 14:30:27,005 WARN r.HandleClientInput [pool-2-thread-20] Client channel is closed
+2023-06-21 14:44:23,350 ERROR r.ReadFromClient [Thread-0] Error reading object from input stream: null
+2023-06-21 14:44:24,517 ERROR m.LoginHandler [pool-2-thread-21] java.nio.channels.ClosedChannelException
+2023-06-21 14:46:30,478 WARN m.ServerConnection [pool-2-thread-27] java.nio.channels.ClosedChannelException
+2023-06-21 14:46:30,478 WARN r.HandleClientInput [pool-2-thread-28] Client channel is closed
+2023-06-21 15:00:47,966 WARN m.ServerConnection [pool-2-thread-35] java.nio.channels.ClosedChannelException
+2023-06-21 15:00:47,966 WARN r.HandleClientInput [pool-2-thread-36] Client channel is closed
+2023-06-21 15:19:19,676 WARN m.ServerConnection [pool-2-thread-48] java.nio.channels.ClosedChannelException
+2023-06-21 15:19:19,676 WARN r.HandleClientInput [pool-2-thread-49] Client channel is closed
+2023-06-21 15:19:37,578 WARN d.DatabaseManager [pool-2-thread-50] Failed to connect to the database: The connection attempt failed.
+2023-06-21 15:20:03,530 WARN d.DatabaseConnection [main] Unable to connect to database: The connection attempt failed.
+2023-06-21 15:32:12,917 ERROR r.ReadFromClient [Thread-0] Error reading object from input stream: null
+2023-06-21 15:32:12,918 WARN d.DatabaseManager [pool-2-thread-1] Failed to connect to the database: Connection to localhost:5439 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2023-06-21 15:32:28,351 WARN d.DatabaseManager [pool-2-thread-4] Failed to connect to the database: Connection to localhost:5439 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2023-06-21 15:32:35,492 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: null
+2023-06-21 15:32:35,493 WARN r.HandleClientInput [pool-2-thread-8] Client channel is closed
+2023-06-21 15:32:35,494 WARN m.ServerConnection [pool-2-thread-7] java.nio.channels.ClosedChannelException
+2023-06-21 15:34:34,099 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: null
+2023-06-21 15:34:34,100 WARN r.HandleClientInput [pool-2-thread-9] Client channel is closed
+2023-06-21 15:34:34,101 WARN r.HandleClientInput [pool-2-thread-10] Client channel is closed
+2023-06-21 15:34:59,240 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: null
+2023-06-21 15:34:59,240 WARN r.HandleClientInput [pool-2-thread-14] Client channel is closed
+2023-06-21 15:34:59,241 WARN r.HandleClientInput [pool-2-thread-15] Client channel is closed
+2023-06-21 15:43:25,157 WARN r.HandleClientInput [pool-2-thread-8] Client channel is closed
+2023-06-21 15:43:25,157 WARN m.ServerConnection [pool-2-thread-7] java.nio.channels.ClosedChannelException
+2023-06-21 15:51:48,594 WARN r.HandleClientInput [pool-2-thread-8] Client channel is closed
+2023-06-21 15:51:48,597 WARN m.ServerConnection [pool-2-thread-7] java.nio.channels.ClosedChannelException
+2023-06-21 16:02:11,795 ERROR r.ReadFromClient [Thread-0] Error reading object from input stream: null
+2023-06-21 16:02:14,499 ERROR m.LoginHandler [pool-2-thread-1] java.nio.channels.ClosedChannelException
+2023-06-21 16:04:26,161 WARN m.ServerConnection [pool-2-thread-11] java.nio.channels.ClosedChannelException
+2023-06-21 16:04:26,162 WARN r.HandleClientInput [pool-2-thread-12] Client channel is closed
+2023-06-21 16:20:36,788 WARN m.ServerConnection [pool-2-thread-17] java.nio.channels.ClosedChannelException
+2023-06-21 16:20:36,788 WARN r.HandleClientInput [pool-2-thread-18] Client channel is closed
+2023-06-21 16:24:22,209 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: null
+2023-06-21 16:24:22,211 WARN m.ServerConnection [pool-2-thread-5] java.nio.channels.ClosedChannelException
+2023-06-21 16:24:22,210 WARN r.HandleClientInput [pool-2-thread-7] Client channel is closed
+2023-06-21 16:24:22,211 WARN m.ServerConnection [pool-2-thread-6] java.nio.channels.ClosedChannelException
+2023-06-21 16:28:04,605 WARN m.ServerConnection [pool-2-thread-12] java.nio.channels.ClosedChannelException
+2023-06-21 16:28:04,605 WARN r.HandleClientInput [pool-2-thread-13] Client channel is closed
+2023-06-21 16:28:43,933 WARN h.UserInputHandler [pool-2-thread-16] not enough args
+2023-06-21 21:21:11,416 WARN m.ServerConnection [pool-2-thread-20] java.nio.channels.ClosedChannelException
+2023-06-21 21:21:11,416 WARN r.HandleClientInput [pool-2-thread-21] Client channel is closed
+2023-06-21 21:32:47,359 ERROR r.ReadFromClient [Thread-0] Error reading object from input stream: null
+2023-06-21 21:32:47,937 ERROR m.LoginHandler [pool-2-thread-1] java.nio.channels.ClosedChannelException
+2023-06-21 21:36:37,068 WARN h.UserInputHandler [pool-2-thread-5] not enough args
+2023-06-21 21:51:18,361 WARN m.ServerConnection [pool-2-thread-8] java.nio.channels.ClosedChannelException
+2023-06-21 21:51:18,361 WARN r.HandleClientInput [pool-2-thread-9] Client channel is closed
+2023-06-21 21:59:44,436 WARN r.HandleClientInput [pool-2-thread-6] Client channel is closed
+2023-06-21 22:18:48,265 WARN r.HandleClientInput [pool-2-thread-7] Client channel is closed
+2023-06-21 22:18:48,265 WARN m.ServerConnection [pool-2-thread-6] java.nio.channels.ClosedChannelException
+2023-06-21 22:26:32,746 WARN d.DatabaseManager [pool-2-thread-1] non-correct pass
+2023-06-21 22:45:57,740 WARN r.HandleClientInput [pool-2-thread-13] Client channel is closed
+2023-06-21 22:45:57,741 WARN m.ServerConnection [pool-2-thread-11] java.nio.channels.ClosedChannelException
+2023-06-21 22:45:57,741 WARN m.ServerConnection [pool-2-thread-12] java.nio.channels.ClosedChannelException
+2023-06-21 22:46:53,411 WARN m.ServerConnection [pool-2-thread-20] java.nio.channels.ClosedChannelException
+2023-06-21 22:46:53,410 WARN r.HandleClientInput [pool-2-thread-21] Client channel is closed
+2023-06-21 22:46:53,411 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: null
+2023-06-21 22:46:53,412 WARN r.HandleClientInput [pool-2-thread-22] Client channel is closed
+2023-06-21 22:47:08,804 WARN m.ServerConnection [pool-2-thread-26] java.nio.channels.ClosedChannelException
+2023-06-21 22:47:08,804 WARN r.HandleClientInput [pool-2-thread-27] Client channel is closed
+2023-06-21 22:51:59,933 ERROR r.ReadFromClient [Thread-0] Error reading object from input stream: null
+2023-06-21 22:52:00,531 ERROR m.LoginHandler [pool-2-thread-1] java.nio.channels.ClosedChannelException
+2023-06-21 22:52:12,983 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: Connection reset
+2023-06-21 22:52:12,983 WARN m.LoginHandler [pool-2-thread-4] Failed to close client channel: Broken pipe
+2023-06-21 22:52:12,984 WARN r.HandleClientInput [pool-2-thread-6] Client channel is closed
+2023-06-21 22:52:16,111 WARN m.LoginHandler [pool-2-thread-3] Failed to close client channel: Broken pipe
+2023-06-21 22:52:16,112 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: Connection reset
+2023-06-21 22:52:16,112 WARN m.ServerConnection [pool-2-thread-7] java.nio.channels.ClosedChannelException
+2023-06-21 22:52:16,112 WARN r.HandleClientInput [pool-2-thread-8] Client channel is closed
+2023-06-21 22:57:23,281 ERROR r.ReadFromClient [Thread-0] Error reading from client channel: null
+2023-06-21 22:57:23,281 WARN r.HandleClientInput [pool-2-thread-15] Client channel is closed
+2023-06-21 22:57:23,284 WARN r.HandleClientInput [pool-2-thread-16] Client channel is closed
+2023-06-21 22:57:58,768 WARN m.ServerConnection [pool-2-thread-20] java.nio.channels.ClosedChannelException
+2023-06-21 22:57:58,772 WARN r.HandleClientInput [pool-2-thread-21] Client channel is closed
+2023-06-21 23:25:13,091 WARN r.HandleClientInput [pool-2-thread-7] Client channel is closed
+2023-06-21 23:25:56,561 WARN r.HandleClientInput [pool-2-thread-16] Client channel is closed
+2023-06-21 23:25:56,562 WARN m.ServerConnection [pool-2-thread-15] java.nio.channels.ClosedChannelException

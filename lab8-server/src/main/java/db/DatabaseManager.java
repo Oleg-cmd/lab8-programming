@@ -18,6 +18,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DatabaseManager {
     private static final String DB_URL = "jdbc:postgresql://localhost:5439/studs";
@@ -132,27 +134,73 @@ public class DatabaseManager {
 
     public static void saveMovies(Collection<Movie> movies, int userId) {
         try (Connection connection = getConnection()) {
-            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM movies WHERE user_id = ?");
+            PreparedStatement upsertStatement = connection.prepareStatement(
+                    "INSERT INTO movies (id, name, coordinate_x, coordinate_y, creation_date, oscars_count, golden_palm_count, tagline, mpaa_rating, director_name, director_birthday, director_height, user_id, color, directorx, directory, directorplacename) "
+                            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+                            + "ON CONFLICT (id) DO UPDATE SET "
+                            + "name = EXCLUDED.name, "
+                            + "coordinate_x = EXCLUDED.coordinate_x, "
+                            + "coordinate_y = EXCLUDED.coordinate_y, "
+                            + "creation_date = EXCLUDED.creation_date, "
+                            + "oscars_count = EXCLUDED.oscars_count, "
+                            + "golden_palm_count = EXCLUDED.golden_palm_count, "
+                            + "tagline = EXCLUDED.tagline, "
+                            + "mpaa_rating = EXCLUDED.mpaa_rating, "
+                            + "director_name = EXCLUDED.director_name, "
+                            + "director_birthday = EXCLUDED.director_birthday, "
+                            + "director_height = EXCLUDED.director_height, "
+                            + "user_id = EXCLUDED.user_id, "
+                            + "color = EXCLUDED.color, "
+                            + "directorx = EXCLUDED.directorx, "
+                            + "directory = EXCLUDED.directory, "
+                            + "directorplacename = EXCLUDED.directorplacename");
+
+            for (Movie movie : movies) {
+                upsertStatement.setInt(1, movie.getId());
+                upsertStatement.setString(2, movie.getName());
+                upsertStatement.setDouble(3, movie.getCoordinates().getX());
+                upsertStatement.setFloat(4, movie.getCoordinates().getY());
+                upsertStatement.setDate(5, Date.valueOf(movie.getCreationDate().toLocalDate()));
+                upsertStatement.setInt(6, movie.getOscarsCount());
+                upsertStatement.setInt(7, movie.getGoldenPalmCount());
+                upsertStatement.setString(8, movie.getTagline());
+                upsertStatement.setString(9, movie.getMpaaRating().toString());
+                upsertStatement.setString(10, movie.getDirector().getName());
+                upsertStatement.setDate(11, Date.valueOf(movie.getDirector().getBirthday().toLocalDate()));
+                upsertStatement.setDouble(12, movie.getDirector().getHeight());
+                upsertStatement.setInt(13, userId);
+                upsertStatement.setString(14, movie.getDirector().getEyeColor().toString());
+                upsertStatement.setDouble(15, movie.getDirector().getLocation().getX());
+                upsertStatement.setDouble(16, movie.getDirector().getLocation().getY());
+                upsertStatement.setString(17, movie.getDirector().getLocation().getName());
+                upsertStatement.executeUpdate();
+            }
+
+            removeNotExistingMovies(movies, userId);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void removeNotExistingMovies(Collection<Movie> movies, int userId) {
+        try (Connection connection = getConnection()) {
+            // Создаем список всех id фильмов в коллекции
+            List<Integer> ids = movies.stream()
+                    .map(Movie::getId)
+                    .collect(Collectors.toList());
+
+            // Создаем строку с этими id для запроса SQL
+            String idString = ids.stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(", "));
+
+            // Удаляем все фильмы пользователя, которые не находятся в списке id
+            String sql = "DELETE FROM movies WHERE user_id = ? AND id NOT IN (" + idString + ")";
+            PreparedStatement deleteStatement = connection.prepareStatement(sql);
             deleteStatement.setInt(1, userId);
             deleteStatement.executeUpdate();
-            PreparedStatement insertStatement = connection.prepareStatement(
-                    "INSERT INTO movies (name, coordinate_x, coordinate_y, creation_date, oscars_count, golden_palm_count, tagline, mpaa_rating, director_name, director_birthday, director_height, user_id, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            for (Movie movie : movies) {
-                insertStatement.setString(1, movie.getName());
-                insertStatement.setDouble(2, movie.getCoordinates().getX());
-                insertStatement.setFloat(3, movie.getCoordinates().getY());
-                insertStatement.setDate(4, Date.valueOf(movie.getCreationDate().toLocalDate()));
-                insertStatement.setInt(5, movie.getOscarsCount());
-                insertStatement.setInt(6, movie.getGoldenPalmCount());
-                insertStatement.setString(7, movie.getTagline());
-                insertStatement.setString(8, movie.getMpaaRating().toString());
-                insertStatement.setString(9, movie.getDirector().getName());
-                insertStatement.setDate(10, Date.valueOf(movie.getDirector().getBirthday().toLocalDate()));
-                insertStatement.setDouble(11, movie.getDirector().getHeight());
-                insertStatement.setInt(12, userId);
-                insertStatement.setString(13, movie.getDirector().getEyeColor().toString());
-                insertStatement.executeUpdate();
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -181,7 +229,10 @@ public class DatabaseManager {
                 Color color = Color.valueOf(result.getString("color"));
                 Person director = new Person();
                 Location location = new Location();
-                location.setLocation(coordinateX, coordinateY, directorName);
+                Double directorX = Double.parseDouble(result.getString("directorx"));
+                Double directorY = Double.parseDouble(result.getString("directory"));
+                String directorPlaceName = result.getString("directorplacename");
+                location.setLocation(directorX, directorY, directorPlaceName);
                 director.setName(directorName);
                 director.setBirthday(directorBirthday.atStartOfDay(ZoneId.systemDefault()));
                 director.setHeight(directorHeight);

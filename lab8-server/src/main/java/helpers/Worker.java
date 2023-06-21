@@ -6,12 +6,12 @@ import modules.CommandOutput;
 import modules.ServerConnection;
 
 import model.*;
-import request.ReadFromClient;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -49,251 +49,136 @@ public class Worker implements Command {
         System.out.println("Woker - Code - start");
 
         Movie movie = Objects.requireNonNullElseGet(currentMovie, Movie::new);
+        System.out.println(movie);
 
-        System.out.println("Woker - Code - 1");
         HashMap<String, Consumer<String>> setters = new HashMap<>();
-
-        System.out.println("Woker - Code - 2");
 
         setters.put("name", movie::setName);
 
-        System.out.println("Woker - Code - 3");
-
         setters.put("coordinates", s -> {
-            while (true) {
-                String[] coordinates = s.split(" ");
-                if (coordinates.length != 2) {
-                    String err = "repeat \n" +
-                            "Invalid coordinates format\n" +
-                            "write data again: \n";
+
+            String[] coordinates = s.split(" ");
+            if (coordinates.length != 2) {
+                String err = "Invalid coordinates format (outside)\n";
+                output.append(err);
+                output.sendOutput(ServerConnection.clientChannel);
+            } else {
+                try {
+                    float x = Float.parseFloat(coordinates[0]);
+                    float y = Float.parseFloat(coordinates[1]);
+                    Coordinates myCoordinates = new Coordinates();
+                    myCoordinates.setX(x);
+                    myCoordinates.setY(y);
+                    movie.setCoordinates(myCoordinates);
+                } catch (NumberFormatException e) {
+                    String err = "Invalid coordinates format (inside)\n";
                     output.append(err);
                     output.sendOutput(ServerConnection.clientChannel);
-                    try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
-                                .trim();
-                    } catch (IOException ex) {
-                        System.out.println("IOException in WORKER : coordinates :" + ex);
-                    }
-                } else {
-                    try {
-                        float x = Float.parseFloat(coordinates[0]);
-                        float y = Float.parseFloat(coordinates[1]);
-                        Coordinates myCoordinates = new Coordinates();
-                        myCoordinates.setX(x);
-                        myCoordinates.setY(y);
-                        movie.setCoordinates(myCoordinates);
-                        break;
-                    } catch (NumberFormatException e) {
-                        String err = "repeat \n" +
-                                "Invalid coordinates format\n" +
-                                "write data again: \n";
-                        output.append(err);
-                        output.sendOutput(ServerConnection.clientChannel);
-                        try {
-                            s = Objects
-                                    .requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
-                                    .trim();
-                        } catch (IOException ex) {
-                            System.out.println("IOException in WORKER : coordinates :" + ex);
-                        }
-                    }
                 }
             }
+
         });
-        System.out.println("Woker - Code - 4");
 
-        Person director = new Person();
-
-        System.out.println("Woker - Code - 5");
+        Person director;
+        if (movie.getDirector() != null) {
+            director = movie.getDirector();
+        } else {
+            director = new Person();
+        }
 
         setters.put("oscarsCount", s -> {
-            while (true) {
-                try {
-                    movie.setOscarsCount(Integer.parseInt(s));
-                    break;
-                } catch (NumberFormatException e) {
-                    String err = "repeat \n" +
-                            "Invalid oscarsCount format\n" +
-                            "write data again: \n";
-                    output.append(err);
-                    output.sendOutput(ServerConnection.clientChannel);
-                    try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
-                                .trim();
-                    } catch (IOException ex) {
-                        System.out.println("IOException in WORKER : oscarsCount :" + ex);
-                    }
-                }
-            }
-        });
 
-        System.out.println("Woker - Code - 6");
+            try {
+                movie.setOscarsCount(Integer.parseInt(s));
+            } catch (NumberFormatException e) {
+                String err = "Invalid oscarsCount format\n";
+                output.append(err);
+                output.sendOutput(ServerConnection.clientChannel);
+            }
+
+        });
 
         setters.put("goldenPalmCount", s -> {
-            while (true) {
-                try {
-                    movie.setGoldenPalmCount(Integer.parseInt(s));
-                    break;
-                } catch (NumberFormatException e) {
-                    String err = "repeat \n" +
-                            "Invalid goldenPalmCount format\n" +
-                            "write data again: \n";
-                    output.append(err);
-                    output.sendOutput(ServerConnection.clientChannel);
-                    try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
-                                .trim();
-                    } catch (IOException ex) {
-                        System.out.println("IOException in WORKER : goldenPalmCount :" + ex);
-                    }
-                }
+            try {
+                movie.setGoldenPalmCount(Integer.parseInt(s));
+            } catch (NumberFormatException e) {
+                String err = "Invalid goldenPalmCount format\n";
+                output.append(err);
+                output.sendOutput(ServerConnection.clientChannel);
             }
         });
 
-        System.out.println("Woker - Code - 7");
         setters.put("tagline", movie::setTagline);
 
         setters.put("mpaaRating", s -> {
-            while (true) {
-                try {
-                    movie.setMpaaRating(MpaaRating.valueOf(s));
-                    break;
-                } catch (IllegalArgumentException e) {
-                    String err = "repeat \n" +
-                            "Invalid mpaaRating format\n" +
-                            "write data again: \n";
-                    output.append(err);
-                    output.sendOutput(ServerConnection.clientChannel);
-                    try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
-                                .trim();
-                    } catch (IOException ex) {
-                        System.out.println("IOException in WORKER : mpaaRating :" + ex);
-                    }
-                }
+            try {
+                movie.setMpaaRating(MpaaRating.valueOf(s));
+            } catch (IllegalArgumentException e) {
+                String err = "Invalid mpaaRating format\n";
+                output.append(err);
+                output.sendOutput(ServerConnection.clientChannel);
             }
         });
-        System.out.println("Woker - Code - 8");
 
         setters.put("directorName", director::setName);
-        System.out.println("Woker - Code - 9");
+
         setters.put("directorHeight", s -> {
-            while (true) {
-                try {
-                    director.setHeight(Integer.parseInt(s));
-                    break;
-                } catch (NumberFormatException e) {
-                    String err = "repeat \n" +
-                            "Invalid directorHeight format\n" +
-                            "write data again: \n";
-                    output.append(err);
-                    output.sendOutput(ServerConnection.clientChannel);
-                    try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
-                                .trim();
-                    } catch (IOException ex) {
-                        System.out.println("IOException in WORKER : directorHeight :" + ex);
-                    }
-                }
+            try {
+                director.setHeight(Integer.parseInt(s));
+            } catch (NumberFormatException e) {
+                String err = "Invalid directorHeight format\n";
+                output.append(err);
+                output.sendOutput(ServerConnection.clientChannel);
             }
         });
-
-        System.out.println("Woker - Code - 10");
 
         setters.put("directorEyeColor", s -> {
-            while (true) {
-                try {
-                    director.setEyeColor(Color.valueOf(s));
-                    break;
-                } catch (IllegalArgumentException e) {
-                    String err = "repeat \n" +
-                            "Invalid directorEyeColor format\n" +
-                            "write data again: \n";
-                    output.append(err);
-                    output.sendOutput(ServerConnection.clientChannel);
-                    try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
-                                .trim();
-                    } catch (IOException ex) {
-                        System.out.println("IOException in WORKER : directorEyeColor :" + ex);
-                    }
-                }
+            try {
+                director.setEyeColor(Color.valueOf(s));
+            } catch (IllegalArgumentException e) {
+                String err = "Invalid directorEyeColor format\n";
+                output.append(err);
+                output.sendOutput(ServerConnection.clientChannel);
             }
         });
 
-        System.out.println("Woker - Code - 11");
         setters.put("directorBirthday", s -> {
-            while (true) {
-                try {
-                    LocalDate birthday = LocalDate.parse(s);
-                    ZoneId zoneId = ZoneId.of("Europe/Moscow"); // Or use your desired time zone
-                    ZonedDateTime zonedDateTime = birthday.atStartOfDay(zoneId);
-                    director.setBirthday(zonedDateTime);
-                    break;
-                } catch (Exception e) {
-                    String err = "repeat \n" +
-                            "Invalid directorBirthday format\n" +
-                            "write data again: \n";
-                    output.append(err);
-                    output.sendOutput(ServerConnection.clientChannel);
-                    try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
-                                .trim();
-                    } catch (IOException ex) {
-                        System.out.println("IOException in WORKER : directorBirthday :" + ex);
-                    }
-                }
+            try {
+                LocalDate birthday = LocalDate.parse(s);
+                ZoneId zoneId = ZoneId.of("Europe/Moscow"); // Or use your desired time zone
+                ZonedDateTime zonedDateTime = birthday.atStartOfDay(zoneId);
+                director.setBirthday(zonedDateTime);
+            } catch (DateTimeParseException e) {
+                String err = "Invalid directorBirthday format\n";
+                output.append(err);
+                output.sendOutput(ServerConnection.clientChannel);
             }
         });
-        System.out.println("Woker - Code - 12");
+
         setters.put("location", s -> {
-            while (true) {
-                String[] locationValues = s.split(" ");
-                if (locationValues.length != 3) {
-                    String err = "repeat \n" +
-                            "Invalid location format\n" +
-                            "write data again: \n";
+            String[] locationValues = s.split(" ");
+            if (locationValues.length != 3) {
+                String err = "Invalid location format (outside)\n";
+                output.append(err);
+                output.sendOutput(ServerConnection.clientChannel);
+            } else {
+                try {
+                    double x = Double.parseDouble(locationValues[0]);
+                    double y = Double.parseDouble(locationValues[1]);
+                    String name = locationValues[2];
+                    Location location = new Location();
+                    location.setLocation(x, y, name);
+                    director.setLocation(location);
+                } catch (NumberFormatException e) {
+                    String err = "Invalid location format (inside)\n";
                     output.append(err);
                     output.sendOutput(ServerConnection.clientChannel);
-                    try {
-                        s = Objects.requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
-                                .trim();
-                    } catch (IOException ex) {
-                        System.out.println("IOException in WORKER : location :" + ex);
-                    }
-                } else {
-                    try {
-                        double x = Double.parseDouble(locationValues[0]);
-                        double y = Double.parseDouble(locationValues[1]);
-                        String name = locationValues[2];
-                        Location location = new Location();
-                        location.setLocation(x, y, name);
-                        director.setLocation(location);
-                        break;
-                    } catch (NumberFormatException e) {
-                        String err = "repeat \n" +
-                                "Invalid location format\n" +
-                                "write data again: \n";
-                        output.append(err);
-                        output.sendOutput(ServerConnection.clientChannel);
-                        try {
-                            s = Objects
-                                    .requireNonNull(ReadFromClient.readStringFromClient(ServerConnection.clientChannel))
-                                    .trim();
-                        } catch (IOException ex) {
-                            System.out.println("IOException in WORKER : location :" + ex);
-                        }
-                    }
                 }
             }
         });
-        System.out.println("Woker - Code - 13");
 
         movie.setCreationDate(ZonedDateTime.now());
-        System.out.println("Woker - Code - 14");
-        System.out.println(director);
         movie.setDirector(director);
-        System.out.println("Woker - Code - 15");
 
         System.out.println("Woker - Code - end");
         return new MethodReturn(setters, movie);

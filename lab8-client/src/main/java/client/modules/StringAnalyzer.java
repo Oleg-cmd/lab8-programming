@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import client.gui.ClientConnectionGUI;
-import client.gui.events.Setup;
+import client.gui.controllers.ClientConnectionGUI;
+import client.gui.setups.Setup;
 import client.helpers.MovieManager;
 import client.helpers.MovieParser;
 import client.model.Movie;
@@ -112,49 +112,40 @@ public class StringAnalyzer {
             }
         }
 
+        else if (receivedData.contains("Invalid")) {
+            isStep = true;
+            ClientConnectionGUI.updateTextArea(receivedData);
+            ClientConnectionGUI.updateInfoArea(receivedData);
+        }
+
         else if (receivedData.contains("Auth completed!")) {
             isStep = true;
             String clientData;
             ClientConnectionGUI.showMainScreen();
         }
 
-        else if (receivedData.trim().startsWith("repeat")) {
-            isStep = true;
-            String clientData = "fff";
-            clientData = clientData + "\nrepeat"; // adding special word for recognising special command
-                                                  // on server
-            try {
-                SendStringNow(clientData, socketChannel);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-
         else if (receivedData.trim().startsWith("turn-off-the-lights")) {
             isStep = true;
+            String clientData;
             // System.out.println("im here");
-            StringBuilder input = new StringBuilder();
-            for (int i = 0; i <= 10; i++) {
-                String myData;
-                if (i != 10) {
-                    myData = receivedData.split("turn-off-the-lights")[1].split("\n")[i + 2];
-                } else {
-                    myData = receivedData.split("turn-off-the-lights")[1].split("\n")[i + 1];
-                }
-
-                System.out.println(myData);
-                input.append("fff");
-                input.append("\n"); // Add a newline character after each input
-
-            }
-            input.append("turn-off-the-lights");
             try {
-                SendStringNow(String.valueOf(input), socketChannel);
-            } catch (IOException e) {
+                clientData = future.get();
+
+                clientData += "turn-off-the-lights";
+                try {
+                    SendStringNow(String.valueOf(clientData), socketChannel);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ExecutionException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+
         }
 
         else {

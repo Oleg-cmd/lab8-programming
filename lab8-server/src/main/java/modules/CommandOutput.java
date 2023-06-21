@@ -17,6 +17,10 @@ public class CommandOutput {
         output.append(s);
     }
 
+    public synchronized String get() {
+        return output.toString();
+    }
+
     public synchronized void sendOutputSync(SocketChannel channel) {
         try {
             if (channel != null && channel.isOpen()) {

@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
+import javax.print.attribute.standard.MediaSize.Other;
+
 /**
  * Represents an UpdateCommand which updates an element in a collection by its
  * ID
@@ -32,30 +34,55 @@ public class UpdateCommand implements Command {
     public UpdateCommand() {
     }
 
-    public static void UpdatingArgs(String idStr, String field, String value, CommandOutput output,
+    public static void UpdatingArgs(String tokens, CommandOutput output,
             CollectionManager collectionManager) {
         try {
-            int id = Integer.parseInt(idStr);
+            System.out.println("Updating by args");
+            System.out.println("Args total: " + tokens);
+            String[] localTokens = tokens.split("\\s+");
+            System.out.println("Tokens length: " + localTokens.length);
+            for (int i = 0; i < localTokens.length; i++) {
+                System.out.println("Token " + i + ": " + localTokens[i]);
+            }
+            System.out.println("parse local id");
+            int id = Integer.parseInt(localTokens[1]);
             Movie movie = collectionManager.getById(id);
+            System.out.println("movie was setupped by id");
             if (movie != null) {
-                System.out.println(movie);
+                // System.out.println(movie);
                 MethodReturn custom = Worker.Code(movie, output);
                 HashMap<String, Consumer<String>> setters = custom.setters();
-                if (!setters.containsKey(field)) {
-                    System.out.println("Field " + field + " is not updatable");
-                    output.append("Field " + field + " is not updatable");
+
+                System.out.println("worker was setupped");
+
+                if (!setters.containsKey(localTokens[2])) {
+                    System.out.println("Field " + localTokens[2] + " is not updatable");
+                    output.append("Field " + localTokens[2] + " is not updatable");
                     writer.newLine();
                     writer.flush();
                 } else {
-                    if (value.isEmpty()) {
-                        System.out.println(field + " cannot be empty");
-                        output.append(field + " cannot be empty");
+                    if (localTokens[3].isEmpty()) {
+                        System.out.println(localTokens[3] + " cannot be empty");
+                        output.append(localTokens[3] + " cannot be empty");
                     }
-                    setters.get(field).accept(value);
-                    movie = custom.movie();
-                    System.out.println("new movie: " + movie);
-                    System.out.println("Ur field was updated successfully");
-                    output.append("Ur field was updated successfully");
+                    System.out.println("creating value");
+                    String value = "";
+                    for (int i = 3; i < localTokens.length; i++) {
+                        value += (localTokens[i] + " ");
+                    }
+                    System.out.println(value);
+                    output.append(value);
+                    setters.get(localTokens[2]).accept(value.trim());
+                    if (collectionManager.checkFieldsByNull(custom.movie())) {
+                        movie = custom.movie();
+                        System.out.println("Ur field was updated successfully");
+                        output.append("Ur field was updated successfully");
+                    } else {
+                        output.append(
+                                "Something get wrong with movie, some fields start to be null, we will not add it to collection, try again later");
+                        System.out.println(
+                                "Something get wrong with movie, some fields start to be null, we will not add it to collection, try again later");
+                    }
                 }
             } else {
                 System.out.println("bad id provided");
@@ -64,6 +91,9 @@ public class UpdateCommand implements Command {
         } catch (IOException e) {
             System.out.println("Some errors: " + e);
             output.append("Some errors while updating");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Array out of bounds: " + e);
+            output.append("Some errors while updating: tokens length is not enough");
         }
 
     }
@@ -92,8 +122,17 @@ public class UpdateCommand implements Command {
                         throw new IllegalArgumentException(field + " cannot be empty");
                     }
                     setters.get(field).accept(value);
-                    movie = custom.movie();
-                    System.out.println("Ur field was updated successfully");
+                    if (collectionManager.checkFieldsByNull(custom.movie())) {
+                        movie = custom.movie();
+                        System.out.println("Ur field was updated successfully");
+                        output.append("Ur field was updated successfully");
+                    } else {
+                        output.append(
+                                "Something get wrong with movie, some fields start to be null, we will not add it to collection, try again later");
+                        System.out.println(
+                                "Something get wrong with movie, some fields start to be null, we will not add it to collection, try again later");
+                    }
+
                 }
             } else {
                 System.out.println("bad id provided");

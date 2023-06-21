@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.gui.ClientConnectionGUI;
+import client.gui.controllers.ClientConnectionGUI;
 import client.model.Movie;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;

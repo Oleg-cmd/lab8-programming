@@ -1,12 +1,12 @@
 package client.modules;
 
-import client.gui.ClientConnectionGUI;
-
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+
+import client.gui.controllers.ClientConnectionGUI;
 
 public class ClientConnection {
     private static final String SERVER_ADDRESS = "localhost";

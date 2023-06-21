@@ -14,13 +14,14 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 
-
-
-
 /**
- A class for handling user input and executing the appropriate command. It uses a HashMap to store all available commands and their corresponding Command objects,
- and it provides a start() method to continuously read and execute user input until the program is terminated. It also provides a toExecute() method for executing
- a single command outside the continuous loop.
+ * A class for handling user input and executing the appropriate command. It
+ * uses a HashMap to store all available commands and their corresponding
+ * Command objects,
+ * and it provides a start() method to continuously read and execute user input
+ * until the program is terminated. It also provides a toExecute() method for
+ * executing
+ * a single command outside the continuous loop.
  */
 public class UserInputHandler implements Command {
 
@@ -33,11 +34,13 @@ public class UserInputHandler implements Command {
     private static String historyPath = null;
     private static String execute = null;
     private static HashMap<String, Command> commands;
+    private static String localInst = "";
 
     private static final Logger logger = LogManager.getLogger(UserInputHandler.class);
 
     /**
-     * Constructs a UserInputHandler with a BufferedReader, a BufferedWriter, and a CollectionManager, and initializes the HashMap with all available commands.
+     * Constructs a UserInputHandler with a BufferedReader, a BufferedWriter, and a
+     * CollectionManager, and initializes the HashMap with all available commands.
      *
      */
     public UserInputHandler(String history, HashMap<String, Command> commands, String execute) {
@@ -47,12 +50,13 @@ public class UserInputHandler implements Command {
     }
 
     /**
-     * Starts the continuous loop of reading and executing user input until the program is terminated.
+     * Starts the continuous loop of reading and executing user input until the
+     * program is terminated.
      */
-
 
     /**
      * Executes a single command specified by the input string.
+     * 
      * @param instruction the string that specifies the command to be executed
      * @throws IOException if there is an error reading or writing to the file
      */
@@ -62,22 +66,29 @@ public class UserInputHandler implements Command {
 
     public static void toExecute(String instruction, String[] tokens, String xmlData) throws IOException {
 
-        CollectionManager collectionManager = UserCollectionManager.getCollection(ServerConnection.getUserIdForSession(ServerConnection.clientChannel));
-        logger.info("user id + " +  ServerConnection.getUserIdForSession(ServerConnection.clientChannel));
+        CollectionManager collectionManager = UserCollectionManager
+                .getCollection(ServerConnection.getUserIdForSession(ServerConnection.clientChannel));
+        logger.info("user id + " + ServerConnection.getUserIdForSession(ServerConnection.clientChannel));
 
         if (tokens == null) {
             tokens = instruction.trim().split("\\s+");
+        }
+        localInst = "";
+        if (instruction == null) {
+            for (String line : tokens) {
+                localInst += (line + " ");
+            }
         }
         logger.info(Arrays.toString(tokens));
         String commandName = tokens[0];
         logger.info("Get Command Name");
         Command command = commands.get(commandName);
 
-
         logger.info("Work with tokens");
         logger.info(" tokens lenght + " + tokens.length);
 
         if (tokens.length > 1) {
+            logger.info("Working with tokens command");
             HashMap<String, Runnable> commands = new HashMap<>();
             String[] finalTokens = tokens;
             commands.put("add_xml", () -> {
@@ -87,12 +98,11 @@ public class UserInputHandler implements Command {
             });
             commands.put("update", () -> {
                 CommandOutput output = new CommandOutput();
-                if (finalTokens.length == 4) {
-                    UpdateCommand.UpdatingArgs(finalTokens[1], finalTokens[2], finalTokens[3], output, collectionManager);
+                if (finalTokens.length > 3) {
+                    UpdateCommand.UpdatingArgs(localInst, output, collectionManager);
                 } else {
                     output.append("not enough args");
                     logger.warn("not enough args");
-
                 }
                 output.sendOutput(ServerConnection.clientChannel);
             });
@@ -118,9 +128,9 @@ public class UserInputHandler implements Command {
                 output.sendOutput(ServerConnection.clientChannel);
             });
             commands.put("execute_script", () -> {
-                    CommandOutput output = new CommandOutput();
-                    new ExecuteCommand(finalTokens[1], xmlData).execute(output);
-                    output.sendOutput(ServerConnection.clientChannel);
+                CommandOutput output = new CommandOutput();
+                new ExecuteCommand(finalTokens[1], xmlData).execute(output);
+                output.sendOutput(ServerConnection.clientChannel);
             });
 
             String argCommandName = tokens[0];
@@ -128,11 +138,12 @@ public class UserInputHandler implements Command {
             CustomRunnable argCommand = new RunnableAdapter(runnable);
             logger.info("Setting up collectionManager for current User");
             argCommand.setCollectionManager(collectionManager);
+            logger.info("Running command: " + argCommandName);
             argCommand.run();
-        }
-        else if (command == null) {
+        } else if (command == null) {
             logger.warn("Unknown command: " + commandName);
         } else {
+            logger.info("Working with non-tokens command");
             SaveToHistoryCommand history = new SaveToHistoryCommand(commandName, historyPath);
             CommandOutput output = new CommandOutput();
             logger.info("Setting up collectionManager for current User");

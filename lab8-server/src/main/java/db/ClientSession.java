@@ -2,6 +2,7 @@ package db;
 
 import fileManager.CollectionManager;
 import model.Movie;
+import modules.LoginHandler;
 import modules.ServerConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,7 +11,6 @@ import java.io.IOException;
 import java.nio.channels.SocketChannel;
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ClientSession implements Runnable {
 
@@ -22,6 +22,7 @@ public class ClientSession implements Runnable {
     private final SocketChannel clientChannel;
     private ExecutorService executor;
     private String username;
+    private LoginHandler loginHandler; // новое поле для хранения экземпляра LoginHandler
 
     private static final Logger logger = LogManager.getLogger(ClientSession.class);
 
@@ -77,8 +78,12 @@ public class ClientSession implements Runnable {
     }
 
     public void close() throws IOException {
-        UserCollectionManager.deleteCollectionManager(getUserId());
+        deleteUserInfo();
         clientChannel.close();
+    }
+
+    public void deleteUserInfo() {
+        UserCollectionManager.deleteCollectionManager(getUserId());
     }
 
     public boolean isAuthorized() {
@@ -104,6 +109,18 @@ public class ClientSession implements Runnable {
 
     public static Collection<Movie> loadObjects() {
         return DatabaseManager.loadMovies(ServerConnection.getUserIdForSession(ServerConnection.clientChannel));
+    }
+
+    public synchronized void recreateLoginHandler() {
+        if (loginHandler != null) {
+            loginHandler.close();
+        }
+        loginHandler = new LoginHandler(clientChannel, this, null);
+        executor.execute(loginHandler);
+    }
+
+    public void handleLogout() {
+        recreateLoginHandler();
     }
 
 }

@@ -20,7 +20,7 @@
             </ImageView>
             <Label />
             <Label text="Welcome To Application" textFill="#e1e1e1" />
-            <Label prefHeight="20.0" prefWidth="206.0" text="Do u want to register or login?" textFill="#e1e1e1">
+            <Label fx:id="authText" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="637.0" text="Do u want to register or login?" textFill="#e1e1e1">
                <font>
                   <Font size="16.0" />
                </font>
@@ -29,8 +29,8 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="168.0" prefWidth="763.0">
                      <children>
-                        <Button fx:id="reg" mnemonicParsing="false" prefHeight="18.0" prefWidth="73.0" style="-fx-translate-x: -50; -fx-border-radius: 8px; -fx-cursor: pointer; -fx-border-width: 1px; -fx-border-color: #222; -fx-background-radius: 8px; -fx-background-insets: 1; -fx-min-width: 75px; -fx-background-color: #13315C;" text="register" textFill="#fcfcfc" />
-                        <Button fx:id="log" mnemonicParsing="false" style="-fx-translate-x: 50; -fx-border-radius: 8px; -fx-cursor: pointer; -fx-border-width: 1px; -fx-border-color: #222; -fx-background-radius: 8px; -fx-background-insets: 1; -fx-min-width: 75px; -fx-background-color: #13315C;" text="login" textFill="WHITE" />
+                        <Button fx:id="reg" mnemonicParsing="false" prefHeight="28.0" prefWidth="116.0" style="-fx-translate-x: -50; -fx-border-radius: 8px; -fx-cursor: pointer; -fx-border-width: 1px; -fx-border-color: #222; -fx-background-radius: 8px; -fx-background-insets: 1; -fx-min-width: 75px; -fx-background-color: #13315C;" text="register" textFill="#fcfcfc" />
+                        <Button fx:id="log" mnemonicParsing="false" prefHeight="28.0" prefWidth="132.0" style="-fx-translate-x: 50; -fx-border-radius: 8px; -fx-cursor: pointer; -fx-border-width: 1px; -fx-border-color: #222; -fx-background-radius: 8px; -fx-background-insets: 1; -fx-min-width: 75px; -fx-background-color: #13315C;" text="login" textFill="WHITE" />
                      </children>
                   </HBox>
                </children>

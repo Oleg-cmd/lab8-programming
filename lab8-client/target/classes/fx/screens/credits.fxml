@@ -22,7 +22,7 @@
             </ImageView>
             <Label />
             <Label text="Welcome To Application" textFill="#e1e1e1" />
-            <Label prefHeight="20.0" prefWidth="206.0" text="Enter your login and password" textFill="#e1e1e1">
+            <Label fx:id="enterWhat" prefHeight="20.0" prefWidth="206.0" text="Enter your login and password" textFill="#e1e1e1">
                <font>
                   <Font size="16.0" />
                </font>

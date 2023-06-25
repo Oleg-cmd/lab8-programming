@@ -5,23 +5,35 @@ import client.gui.BtnEvents.CreditsBtn;
 import client.gui.setups.Setup;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.binding.StringBinding;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import client.modules.ClientLogic;
 import client.modules.HandleUserInput;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class ClientConnectionGUI extends Application {
     private static Stage mainStage; // Статическая переменная для хранения ссылки на Stage
     private static Thread clientThread; // Хранение ссылки на поток ClientLogic
+    public static Locale currentLocale;
+
+    private static ObservableResourceFactory resourceFactory = new ObservableResourceFactory();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -33,8 +45,9 @@ public class ClientConnectionGUI extends Application {
         // Установка сцены на основной Stage
         primaryStage.setTitle("GUI");
         // Отображение GUI
-        showLoadingWindow();
 
+        showLoadingWindow(currentLocale);
+        resourceFactory.setResources(ResourceBundle.getBundle("messages/messages", Locale.forLanguageTag("en")));
         // Запуск логики клиента в отдельном потоке
         clientThread = new Thread(() -> new ClientLogic().run());
         clientThread.start();
@@ -52,25 +65,27 @@ public class ClientConnectionGUI extends Application {
         System.exit(0);
     }
 
-    public static void showLoadingWindow() {
+    public static void showLoadingWindow(Locale locale) {
         Platform.runLater(() -> {
             System.out.println("showLoadingWindow() called");
             try {
                 FXMLLoader loader = new FXMLLoader();
                 URL xmlUrl = ClientConnectionGUI.class.getResource("/fx/screens/loading.fxml");
                 loader.setLocation(xmlUrl);
+                loader.setResources(resourceFactory.getResources());
                 Parent rootLayout = loader.load();
                 Scene scene = new Scene(rootLayout);
+
+                scene = createMenuBar(scene);
                 mainStage.setScene(scene);
                 mainStage.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-
     }
 
-    public static void showAuthWindow() {
+    public static void showAuthWindow(Locale locale) {
         Platform.runLater(() -> {
             System.out.println("showAuthWindow() called");
             if (mainStage != null) {
@@ -78,15 +93,15 @@ public class ClientConnectionGUI extends Application {
                     FXMLLoader loader = new FXMLLoader();
                     URL xmlUrl = ClientConnectionGUI.class.getResource("/fx/screens/auth.fxml");
                     loader.setLocation(xmlUrl);
+                    loader.setResources(resourceFactory.getResources());
                     Parent rootLayout = loader.load();
                     Scene scene = new Scene(rootLayout);
+
                     mainStage.setScene(scene);
                     mainStage.show();
-                    // Создаем экземпляр ButtonEventManager и передаем ему eventManager
-                    AuthBtn authBtn = new AuthBtn();
-                    // Вызываем метод bindEvents() для привязки ивентов к кнопкам
-                    authBtn.bindEvents(scene);
-
+                    AuthBtn authBtn = new AuthBtn(resourceFactory);
+                    authBtn.bindEvents(scene, locale);
+                    scene = createMenuBar(scene);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -94,7 +109,6 @@ public class ClientConnectionGUI extends Application {
                 System.out.println("mainStage is null");
             }
         });
-
     }
 
     public static void showCredits() {
@@ -109,8 +123,10 @@ public class ClientConnectionGUI extends Application {
                     Scene scene = new Scene(rootLayout);
                     mainStage.setScene(scene);
                     mainStage.show();
-                    CreditsBtn creditsBtn = new CreditsBtn();
+                    CreditsBtn creditsBtn = new CreditsBtn(resourceFactory);
                     creditsBtn.bindEvents(scene);
+
+                    scene = createMenuBar(scene);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -133,6 +149,8 @@ public class ClientConnectionGUI extends Application {
                     Scene scene = new Scene(rootLayout);
                     mainStage.setScene(scene);
                     mainStage.show();
+
+                    scene = createMenuBar(scene);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -147,6 +165,7 @@ public class ClientConnectionGUI extends Application {
         Platform.runLater(() -> {
             System.out.println("updateSceneNow() called");
             if (mainStage != null) {
+                createMenuBar(scene);
                 mainStage.setScene(scene);
                 mainStage.show();
             } else {
@@ -262,10 +281,31 @@ public class ClientConnectionGUI extends Application {
                     loader.setLocation(xmlUrl);
                     Parent rootLayout = loader.load();
                     Scene scene = new Scene(rootLayout);
-                    scene = Setup.setup(scene);
+                    scene = Setup.setup(scene, resourceFactory);
                     mainStage.setScene(scene);
                     mainStage.show();
+
+                    HandleUserInput.SendCommand("get_id");
+                    try {
+                        Thread.sleep(100);
+                    } catch (Exception e) {
+                        System.out.println("damn thread exception in showMainScreen()");
+                    }
                     HandleUserInput.SendCommand("show");
+                    createMenuBar(scene);
+
+                    Button execute = (Button) scene.lookup("#execute");
+                    StringBinding executeLabelBinding = resourceFactory.getStringBinding("execute_button_label");
+                    execute.textProperty().bind(executeLabelBinding);
+
+                    FileChooser fileChooser = new FileChooser();
+                    execute.setOnAction(event -> {
+                        fileChooser.setTitle("Execute Script");
+                        File selectedFile = fileChooser.showOpenDialog(mainStage);
+                        HandleUserInput.SendCommand("execute_script " + selectedFile.getPath());
+
+                    });
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -273,6 +313,61 @@ public class ClientConnectionGUI extends Application {
                 System.out.println("mainStage is null");
             }
         });
+
+    }
+
+    private static Scene createMenuBar(Scene scene) {
+        System.out.println("Creating menu bar");
+        MenuBar menuBar = new MenuBar();
+        Menu languageMenu = new Menu("Language");
+        menuBar.getStyleClass().add("menu");
+
+        MenuItem englishMenuItem = new MenuItem("English");
+        englishMenuItem.setOnAction(event -> {
+            currentLocale = new Locale("en");
+            resourceFactory.setResources(ResourceBundle.getBundle("messages/messages", currentLocale));
+        });
+
+        MenuItem russianMenuItem = new MenuItem("Русский");
+        russianMenuItem.setOnAction(event -> {
+            currentLocale = new Locale("ru");
+            resourceFactory.setResources(ResourceBundle.getBundle("messages/messages", currentLocale));
+        });
+
+        MenuItem slovakMenuItem = new MenuItem("Slovenčina");
+        slovakMenuItem.setOnAction(event -> {
+            currentLocale = new Locale("sk");
+            resourceFactory.setResources(ResourceBundle.getBundle("messages/messages", currentLocale));
+        });
+
+        MenuItem albanianMenuItem = new MenuItem("Shqip");
+        albanianMenuItem.setOnAction(event -> {
+            currentLocale = new Locale("sq");
+            resourceFactory.setResources(ResourceBundle.getBundle("messages/messages", currentLocale));
+        });
+
+        MenuItem spanishMenuItem = new MenuItem("Español");
+        spanishMenuItem.setOnAction(event -> {
+            currentLocale = new Locale("es", "GT");
+            resourceFactory.setResources(ResourceBundle.getBundle("messages/messages", currentLocale));
+        });
+
+        languageMenu.getItems().addAll(
+                englishMenuItem,
+                russianMenuItem,
+                slovakMenuItem,
+                albanianMenuItem,
+                spanishMenuItem);
+
+        menuBar.getMenus().add(languageMenu);
+        scene.getStylesheets().add(scene.getClass().getResource("/assets/styles/styles.css").toExternalForm());
+
+        System.out.println("Adding menu bar to root layout");
+        AnchorPane rootLayout = (AnchorPane) scene.getRoot();
+        rootLayout.getChildren().remove(menuBar); // Удаляем menuBar, если он уже есть
+        rootLayout.getChildren().add(menuBar); // Добавляем menuBar последним
+        System.out.println("End of menu bar operations");
+        return scene;
 
     }
 

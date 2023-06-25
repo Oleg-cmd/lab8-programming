@@ -1,14 +1,19 @@
 package client.gui.setups;
 
 import client.gui.controllers.ClientConnectionGUI;
+import client.gui.controllers.ObservableResourceFactory;
+import client.model.Color;
 import client.model.Fields;
+import client.model.MpaaRating;
 import client.modules.HandleUserInput;
 import client.modules.StringAnalyzer;
+import javafx.beans.binding.StringBinding;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -19,8 +24,10 @@ import javafx.scene.layout.VBox;
 public class SetupInit {
     public static String myData = "";
 
-    public static Scene setupInit(Scene scene) {
+    public static Scene setupInit(Scene scene, ObservableResourceFactory resourceFactory) {
         Button add = (Button) scene.lookup("#add");
+        StringBinding addButtonLabelBinding = resourceFactory.getStringBinding("add_button_label");
+        add.textProperty().bind(addButtonLabelBinding);
         add.setOnAction(event -> {
             ClientConnectionGUI.resetCC();
             VBox ccVbox = (VBox) scene.lookup("#ccVbox");
@@ -36,12 +43,30 @@ public class SetupInit {
 
                 for (int i = 0; i < tokens.length; i++) {
                     if (!tokens[i].contains("id")) {
-                        TextField input = new TextField();
-                        input.getStyleClass().add("input");
-                        input.setPromptText(tokens[i]);
-                        input.setPrefWidth(scene.getWidth() * 0.5);
-                        GridPane.setConstraints(input, i % 2, i / 2);
-                        gridPane.getChildren().add(input);
+                        // Create a ComboBox if the token is "mpaaRating" or "Color"
+                        if (tokens[i].contains("mpaaRating")) {
+                            ComboBox<MpaaRating> comboBox = new ComboBox<>();
+                            comboBox.getItems().addAll(MpaaRating.values());
+                            comboBox.getStyleClass().add("input");
+                            comboBox.setPrefWidth(scene.getWidth() * 0.5);
+                            GridPane.setConstraints(comboBox, i % 2, i / 2);
+                            gridPane.getChildren().add(comboBox);
+                        } else if (tokens[i].contains("directorEyeColor")) {
+                            ComboBox<Color> comboBox = new ComboBox<>();
+                            comboBox.getItems().addAll(Color.values());
+                            comboBox.getStyleClass().add("input");
+                            comboBox.setPrefWidth(scene.getWidth() * 0.5);
+                            GridPane.setConstraints(comboBox, i % 2, i / 2);
+                            gridPane.getChildren().add(comboBox);
+                        } else {
+                            // If it's not "mpaaRating" or "Color", create a TextField
+                            TextField input = new TextField();
+                            input.getStyleClass().add("input");
+                            input.setPromptText(tokens[i]);
+                            input.setPrefWidth(scene.getWidth() * 0.5);
+                            GridPane.setConstraints(input, i % 2, i / 2);
+                            gridPane.getChildren().add(input);
+                        }
                     }
                 }
 
@@ -73,6 +98,16 @@ public class SetupInit {
                                     break;
                                 } else {
                                     myData += textField.getText().trim();
+                                    myData += "\n";
+                                }
+                            } else if (node instanceof ComboBox) {
+                                ComboBox<?> comboBox = (ComboBox<?>) node;
+                                Object selectedItem = comboBox.getValue();
+                                if (selectedItem == null) {
+                                    hasEmptyFields = true;
+                                    break;
+                                } else {
+                                    myData += selectedItem.toString();
                                     myData += "\n";
                                 }
                             }

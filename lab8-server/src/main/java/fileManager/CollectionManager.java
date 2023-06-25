@@ -9,6 +9,8 @@ import java.util.Random;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import db.DatabaseManager;
+
 /**
  * The CollectionManager class manages a collection of movies.
  */
@@ -35,6 +37,15 @@ public class CollectionManager {
         lock.readLock().lock();
         try {
             return movies;
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    public Collection<Movie> getAllMovies() {
+        lock.readLock().lock();
+        try {
+            return DatabaseManager.loadAllMovies();
         } finally {
             lock.readLock().unlock();
         }

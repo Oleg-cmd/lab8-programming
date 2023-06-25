@@ -11,6 +11,7 @@
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/AddIfMaxCommand.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/ClearHistoryCommand.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/CustomRunnable.java
+/Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/SendUserIdcommand.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/ExitCommand.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/request/HandleClientInput.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/ParseXmlCommand.java
@@ -21,7 +22,6 @@
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/fileManager/XmlToJava.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/db/DatabaseManager.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/helpers/CommandObject.java
-/Users/olevegic/home/dev/lab/lab8-server/src/main/java/SHA.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/model/Coordinates.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/ClearCommand.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/helpers/UserInputHandler.java
@@ -37,6 +37,7 @@
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/modules/ServerConnection.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/helpers/RunnableAdapter.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/model/Person.java
+/Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/LogoutCommand.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/helpers/MethodReturn.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/modules/CommandOutputDecorator.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/SaveToHistoryCommand.java
@@ -45,6 +46,7 @@
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/fileManager/XmlConverter.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/ExecuteCommand.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/PrintMpaaCommand.java
+/Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/AllMoviesCommand.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/fileManager/CollectionManager.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/collectionWorker/FilterByNameCommand.java
 /Users/olevegic/home/dev/lab/lab8-server/src/main/java/modules/CommandOutput.java

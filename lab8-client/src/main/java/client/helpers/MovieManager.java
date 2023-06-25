@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 
 public class MovieManager {
     public static List<Movie> movies = new ArrayList<>();
+    public static List<Movie> Allmovies = new ArrayList<>();
     private static Scene currentScene; // Reference to the current scene
     private static boolean init = true;
 
@@ -42,6 +43,7 @@ public class MovieManager {
     }
 
     public static void setupMovies(Scene scene) {
+
         Platform.runLater(() -> {
             System.out.println("Starting of setuping movies");
 
@@ -62,6 +64,7 @@ public class MovieManager {
             if (original != null) {
 
                 if (movies != null) {
+
                     System.out.println("Movies size is: " + movies.size());
                     Double sum = 200.0;
 

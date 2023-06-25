@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.List;
 
 import client.gui.controllers.ClientConnectionGUI;
 
@@ -12,6 +13,8 @@ public class ClientConnection {
     private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT = 11223;
     public static String commandList;
+    public static int userId;
+    public static List<Integer> ids;
 
     public void run() {
         boolean connected = false;
@@ -33,7 +36,7 @@ public class ClientConnection {
                 Selector selector = Selector.open();
                 socketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
 
-                ClientConnectionGUI.showAuthWindow();
+                ClientConnectionGUI.showLoadingWindow(ClientConnectionGUI.currentLocale);
                 HandleUserInput.handleUserInput(selector, socketChannel);
             } catch (Exception e) {
                 System.out.println(e);

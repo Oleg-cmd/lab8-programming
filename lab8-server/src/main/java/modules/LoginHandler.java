@@ -20,6 +20,7 @@ public class LoginHandler implements Runnable {
 
     private ClientSession session;
     private SelectionKey key;
+    private Thread runningThread; // Field to store the thread that is currently running this LoginHandler
 
     public LoginHandler(SocketChannel clientChannel, ClientSession session, SelectionKey key) {
         this.clientChannel = clientChannel;
@@ -33,6 +34,7 @@ public class LoginHandler implements Runnable {
             String credits = LogOrReq(clientChannel, session);
             if (credits != null) {
                 logger.info(credits);
+                runningThread = Thread.currentThread();
                 if (isCorrectLogin(credits)) {
                     SendCommandList.sendString(clientChannel, "Auth completed! Sending to u command list!");
                     SendCommandList.sendCommandsList(clientChannel);
@@ -161,4 +163,10 @@ public class LoginHandler implements Runnable {
         }
     }
 
+    public void close() {
+        if (runningThread != null) {
+            runningThread.interrupt();
+        }
+        // You can also close any resources used by this LoginHandler here
+    }
 }

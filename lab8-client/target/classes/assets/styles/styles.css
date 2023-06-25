@@ -22,3 +22,22 @@
     -fx-border-color: #fff;
     -fx-text-fill: #fff;
 }
+#scatterChartId .chart-series-line.series0 { /* Current user */
+    -fx-stroke: #1f77b4;
+}
+#scatterChartId .chart-series-line.series1 { /* Other users */
+    -fx-stroke: #ff7f0e;
+}
+/* 
+.menu {
+    -fx-background-color: #0000;  
+    -fx-border-radius: 5px;  
+    -fx-background-radius: 5px; 
+    -fx-text-fill: #fff; 
+} */
+/* smth strange with it */
+/* .menu-item {
+    -fx-background-color: #0000;  
+    -fx-text-fill: #fff;
+} */
+

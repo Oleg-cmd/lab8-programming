@@ -1,7 +1,9 @@
 package client.gui.BtnEvents;
 
 import javafx.scene.Node;
+import client.gui.controllers.ObservableResourceFactory;
 import client.modules.StringAnalyzer;
+import javafx.beans.binding.StringBinding;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -10,12 +12,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class CreditsBtn {
     private static String username;
     private static String password;
+    private final ObservableResourceFactory resourceFactory;
 
-    public CreditsBtn() {
+    public CreditsBtn(ObservableResourceFactory resourceFactory) {
+        this.resourceFactory = resourceFactory;
     }
 
     public static String getUsername() {
@@ -28,6 +34,13 @@ public class CreditsBtn {
         Button enterBtn = (Button) scene.lookup("#enter");
         TextField login = (TextField) scene.lookup("#logField");
         PasswordField pass = (PasswordField) scene.lookup("#passField");
+
+        StringBinding enterLabelBinding = resourceFactory.getStringBinding("enter_label");
+        enterBtn.textProperty().bind(enterLabelBinding);
+
+        Label enterWhat = (Label) scene.lookup("#enterWhat");
+        StringBinding enterWhatLabelBinding = resourceFactory.getStringBinding("enter_what_label");
+        enterWhat.textProperty().bind(enterWhatLabelBinding);
 
         // Привязываем лямбда-выражение вместо анонимного класса
         enterBtn.setOnAction((ActionEvent event) -> {
@@ -44,7 +57,10 @@ public class CreditsBtn {
             } else {
                 // Значения login или pass равны null или пустой строке
                 // Добавляем текстовое поле с надписью "fields can't be null" под кнопкой
-                Label errorField = new Label("fields can't be null");
+                StringBinding errorLabelBinding = resourceFactory.getStringBinding("error_field_label");
+                Label errorField = new Label();
+                errorField.textProperty().bind(errorLabelBinding);
+
                 // Установка стилей для errorField
                 errorField.setStyle(
                         "-fx-text-fill: #fff; -fx-background-color: rgb(0, 0, 0); -fx-max-width: 200px; -fx-aligment: center;");
@@ -70,6 +86,13 @@ public class CreditsBtn {
                 }
             }
         });
+        // Локализация placeholder для поля "Login"
+        StringBinding loginPlaceholderBinding = resourceFactory.getStringBinding("login_placeholder");
+        login.promptTextProperty().bind(loginPlaceholderBinding);
+
+        // Локализация placeholder для поля "Password"
+        StringBinding passPlaceholderBinding = resourceFactory.getStringBinding("password_placeholder");
+        pass.promptTextProperty().bind(passPlaceholderBinding);
 
         System.out.println("end binding...");
     }

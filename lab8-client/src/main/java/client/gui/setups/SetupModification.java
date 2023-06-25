@@ -1,9 +1,11 @@
 package client.gui.setups;
 
 import client.gui.controllers.ClientConnectionGUI;
+import client.gui.controllers.ObservableResourceFactory;
 import client.model.Fields;
 import client.model.MpaaRating;
 import client.modules.HandleUserInput;
+import javafx.beans.binding.StringBinding;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,14 +16,18 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class SetupModification {
-    public static Scene setupModification(Scene scene) {
+    public static Scene setupModification(Scene scene, ObservableResourceFactory resourceFactory) {
 
         Button clear = (Button) scene.lookup("#clear");
+        StringBinding clearButtonLabelBinding = resourceFactory.getStringBinding("clear_button_label");
+        clear.textProperty().bind(clearButtonLabelBinding);
         clear.setOnAction(event -> {
             HandleUserInput.SendCommand("clear");
         });
 
         Button remove = (Button) scene.lookup("#remove");
+        StringBinding removeButtonLabelBinding = resourceFactory.getStringBinding("remove_button_label");
+        remove.textProperty().bind(removeButtonLabelBinding);
         remove.setOnAction(event -> {
 
             ClientConnectionGUI.resetCC();
@@ -88,6 +94,8 @@ public class SetupModification {
 
         // remove_lower
         Button removeLower = (Button) scene.lookup("#remove_l");
+        StringBinding removeLowerButtonLabelBinding = resourceFactory.getStringBinding("remove_lower_button_label");
+        removeLower.textProperty().bind(removeLowerButtonLabelBinding);
         removeLower.setOnAction(event -> {
             ClientConnectionGUI.resetCC();
 
@@ -141,11 +149,15 @@ public class SetupModification {
         });
 
         Button save = (Button) scene.lookup("#save");
+        StringBinding saveButtonLabelBinding = resourceFactory.getStringBinding("save_button_label");
+        save.textProperty().bind(saveButtonLabelBinding);
         save.setOnAction(event -> {
             HandleUserInput.SendCommand("save");
         });
 
         Button update = (Button) scene.lookup("#update");
+        StringBinding updateButtonLabelBinding = resourceFactory.getStringBinding("update_button_label");
+        update.textProperty().bind(updateButtonLabelBinding);
         update.setOnAction(event -> {
             ClientConnectionGUI.resetCC();
 

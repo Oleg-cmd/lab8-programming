@@ -7,7 +7,7 @@ import helpers.UserInputHandler;
 import java.util.HashMap;
 
 public class CollectionInit {
-    public static void Init(){
+    public static void Init() {
         HashMap<String, Command> commands = new HashMap<>();
 
         String[] path = new MainHelper().MainHelper();
@@ -27,6 +27,9 @@ public class CollectionInit {
         commands.put("add", new AddCommand());
         commands.put("save", new SaveCommand(collection));
         commands.put("quit", new QuitCommand());
+        commands.put("logout", new LogoutCommand());
+        commands.put("get_all", new AllMoviesCommand());
+        commands.put("get_id", new SendUserIdcommand());
 
         UserInputHandler inputHandler = new UserInputHandler(history, commands, execute);
     }

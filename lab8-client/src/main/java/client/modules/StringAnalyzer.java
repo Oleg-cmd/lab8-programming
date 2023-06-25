@@ -31,6 +31,7 @@ public class StringAnalyzer {
             isStep = true;
             String clientData;
             try {
+                Platform.runLater(() -> ClientConnectionGUI.showAuthWindow(ClientConnectionGUI.currentLocale));
                 clientData = future.get();
                 clientData = clientData + "\nrequest"; // adding special word for recognising special
                 SendStringNow(clientData, socketChannel);
@@ -68,6 +69,24 @@ public class StringAnalyzer {
             }
         }
 
+        else if (receivedData.contains("show-d")) {
+            isStep = true;
+            String[] lines = receivedData.split("\n");
+            if (lines.length >= 2) {
+                if (lines[1].contains("empty")) {
+                    System.out.println("Setuping clear collection");
+                    MovieManager.Allmovies = null;
+                } else {
+                    String data = lines[1];
+                    System.out.println("Parsing");
+                    MovieManager.Allmovies = MovieParser.parseMovies(data);
+                    System.out.println(MovieManager.Allmovies);
+                }
+            } else {
+                System.out.println("Some kind of error was made by recieving data from server");
+            }
+        }
+
         else if (receivedData.contains("Your credits are wrong!") || receivedData.contains("Bad credits provided")) {
             isStep = true;
             Task<Void> task = new Task<Void>() {
@@ -89,6 +108,24 @@ public class StringAnalyzer {
             // Запускаем задачу в отдельном потоке
             Thread thread = new Thread(task);
             thread.start();
+        }
+
+        else if (receivedData.contains("UserId")) {
+            String[] tokens = receivedData.split("\n");
+            if (tokens.length == 3) {
+                try {
+                    int UserId = Integer.parseInt(tokens[1]);
+                    ClientConnection.userId = UserId;
+                    List<Integer> ids = parseIntegerList(tokens[2]);
+                    ClientConnection.ids = ids;
+                    System.out.println("userId was setupped");
+
+                } catch (Exception e) {
+                    System.out.println("userId is invalid");
+                }
+            } else {
+                System.out.println("Tokens length of userId is invalid");
+            }
         }
 
         else if (receivedData.contains("Enter") || receivedData.contains("Please")) {
@@ -122,6 +159,10 @@ public class StringAnalyzer {
             isStep = true;
             String clientData;
             ClientConnectionGUI.showMainScreen();
+        }
+
+        else if (receivedData.contains("All movies have been successfully removed")) {
+            HandleUserInput.SendCommand("show");
         }
 
         else if (receivedData.trim().startsWith("turn-off-the-lights")) {
@@ -161,5 +202,15 @@ public class StringAnalyzer {
         ByteBuffer writeBuffer = ByteBuffer.wrap(userInput.getBytes());
         socketChannel.write(writeBuffer);
         // System.out.println("was send successfully");/
+    }
+
+    public static List<Integer> parseIntegerList(String input) {
+        List<Integer> list = new ArrayList<>();
+        String[] parts = input.replaceAll("\\[|\\]", "").split(", ");
+        for (String part : parts) {
+            int number = Integer.parseInt(part);
+            list.add(number);
+        }
+        return list;
     }
 }

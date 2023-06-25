@@ -259,4 +259,71 @@ public class DatabaseManager {
         return movies;
     }
 
+    public static Collection<Movie> loadAllMovies() {
+        Collection<Movie> movies = new ArrayList<>();
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM movies");
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                Integer id = result.getInt("id");
+                String name = result.getString("name");
+                float coordinateX = result.getFloat("coordinate_x");
+                float coordinateY = result.getFloat("coordinate_y");
+                ZonedDateTime creationDate = result.getDate("creation_date").toLocalDate()
+                        .atStartOfDay(ZoneId.systemDefault());
+                Integer oscarsCount = result.getInt("oscars_count");
+                Integer goldenPalmCount = result.getInt("golden_palm_count");
+                String tagline = result.getString("tagline");
+                MpaaRating mpaaRating = MpaaRating.valueOf(result.getString("mpaa_rating"));
+                String directorName = result.getString("director_name");
+                LocalDate directorBirthday = result.getDate("director_birthday").toLocalDate();
+                double directorHeight = result.getDouble("director_height");
+                Color color = Color.valueOf(result.getString("color"));
+                Person director = new Person();
+                Location location = new Location();
+                Double directorX = Double.parseDouble(result.getString("directorx"));
+                Double directorY = Double.parseDouble(result.getString("directory"));
+                String directorPlaceName = result.getString("directorplacename");
+                location.setLocation(directorX, directorY, directorPlaceName);
+                director.setName(directorName);
+                director.setBirthday(directorBirthday.atStartOfDay(ZoneId.systemDefault()));
+                director.setHeight(directorHeight);
+                director.setLocation(location);
+                director.setEyeColor(color);
+                Movie movie = new Movie();
+                movie.setId(id);
+                movie.setName(name);
+                Coordinates thisCoordinates = new Coordinates();
+                thisCoordinates.setX(coordinateX);
+                thisCoordinates.setY(coordinateY);
+                movie.setCoordinates(thisCoordinates);
+                movie.setCreationDate(creationDate);
+                movie.setOscarsCount(oscarsCount);
+                movie.setGoldenPalmCount(goldenPalmCount);
+                movie.setTagline(tagline);
+                movie.setMpaaRating(mpaaRating);
+                movie.setDirector(director);
+                movies.add(movie);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return movies;
+    }
+
+    public static List<Integer> getAllUserIds() {
+        List<Integer> userIds = new ArrayList<>();
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT id FROM users");
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                int id = result.getInt("id");
+                userIds.add(id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userIds;
+    }
+
 }

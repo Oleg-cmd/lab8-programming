@@ -76,19 +76,32 @@ public class CommandHandler {
         // You can implement this however you like, for example using a set of allowed
         // commands
         if (commandList != null) {
-            String[] list = commandList.trim().split(", ");
-            for (String s : list) {
-                if (s.trim().equals(command)) {
-                    return true;
-                }
-            }
-
             if (command.trim().equals("quit")) {
                 System.out.println("Closing app...");
                 ClientConnectionGUI.CloseUp();
                 System.out.println("Application closed");
                 return true;
             }
+
+            String[] list = commandList.trim().split(", ");
+            for (String s : list) {
+                if (s.trim().equals(command.trim())) {
+                    return true;
+                }
+            }
+
+            if (command.trim().equals("logout")) {
+                return true;
+            }
+
+            if (command.trim().equals("get_all")) {
+                return true;
+            }
+
+            if (command.trim().equals("get_id")) {
+                return true;
+            }
+
         } else {
             System.out.println("CommandList is null");
         }

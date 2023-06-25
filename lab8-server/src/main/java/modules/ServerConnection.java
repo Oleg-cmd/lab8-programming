@@ -134,7 +134,7 @@ public class ServerConnection {
             ClientSession session = new ClientSession(clientChannel, readExecutor);
             sessions.add(session);
             // Pause for 1 second before sending the list of available commands
-            Thread.sleep(1);
+            Thread.sleep(10);
 
             readExecutor.execute(new LoginHandler(clientChannel, session, key));
         } catch (IOException | InterruptedException e) {
@@ -208,4 +208,14 @@ public class ServerConnection {
         }
         return -1; // если не найдено, возвращаем -1
     }
+
+    public static ClientSession getSessionByChannel(SocketChannel clientChannel) {
+        for (ClientSession session : sessions) {
+            if (session.getClientChannel().equals(clientChannel)) {
+                return session;
+            }
+        }
+        return null; // if not found, return null
+    }
+
 }
